@@ -11,6 +11,7 @@ class SimpleSelector : public Selector {
     std::string id;
     std::vector<std::string> classes;
     bool is_universal;
+    void display();
     SimpleSelector() = default;
 };
 #endif

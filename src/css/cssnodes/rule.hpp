@@ -9,5 +9,6 @@ class Rule {
   public:
     std::vector<Selector* > selectors;
     std::vector<Declaration> declarations;
+    void display();
 };
 #endif 

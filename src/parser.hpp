@@ -1,3 +1,6 @@
+#pragma once
+#ifndef GENERIC_PARSER
+#define GENERIC_PARSER
 #include <string>
 
 class Parser {
@@ -12,3 +15,4 @@ class Parser {
     void consumeComment();
     Parser() = default;
 };
+#endif

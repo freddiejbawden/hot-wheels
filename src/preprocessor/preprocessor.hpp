@@ -3,7 +3,7 @@
 #ifndef PREPROCESSOR
 #define PREPROCESSOR
 
-class HTMLPreprocessor {
+class Preprocessor {
   public:
     static std::string loadFile(std::string filename);    
 };

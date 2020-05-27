@@ -4,6 +4,7 @@
 class Selector {
   public:
     virtual ~Selector()=0;
+    virtual void display();
 };
 
 #endif

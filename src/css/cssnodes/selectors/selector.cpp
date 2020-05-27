@@ -1,5 +1,4 @@
 #include "selector.hpp"
 
-Selector::~Selector() {
-  
-}
+Selector::~Selector() {}
+void Selector::display() {}

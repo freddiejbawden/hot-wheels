@@ -1,3 +1,4 @@
+
 #include "parser.hpp"
 
 char Parser::getCurrentChar() {

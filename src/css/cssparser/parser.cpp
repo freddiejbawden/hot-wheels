@@ -1,12 +1,5 @@
 #include "parser.hpp"
-
-
-// TODO: combine HTMLParser and CSSParser to share utilities 
-// through inheritence
-
-char CSSParser::getCurrentChar() {
-  return input.at(inputPos);
-}
+#include <iostream>
   
 std::string CSSParser::parseIdentifier() 
 {
@@ -23,6 +16,7 @@ SimpleSelector* CSSParser::parseSimpleSelector()
   SimpleSelector *selector = new SimpleSelector();
   selector->is_universal = false;
   while (inputPos < input.size()) {
+    skipWhitespace();
     char c = getCurrentChar();
     if (c == '#') { 
       inputPos++;
@@ -43,16 +37,61 @@ SimpleSelector* CSSParser::parseSimpleSelector()
 
 }
 
-std::vector<Selector*> CSSParser::parseSelectors() {
-  std::vector<Selector*> selectors;
-  while (getCurrentChar() != '{') {
+void CSSParser::skipToChar(char c) {
+  while(getCurrentChar() != c) {
+    inputPos++;
   }
 }
 
-std::vector<Rule*> CSSParser::parse()
+std::vector<Selector*> CSSParser::parseSelectors() {
+  std::vector<Selector*> selectors;
+  while (getCurrentChar() != '{') {
+    selectors.push_back(parseSimpleSelector());
+    skipWhitespace();
+    if (getCurrentChar() == ',') {
+      inputPos++;
+    } else if (getCurrentChar() == '{') {
+      break;
+    } else {
+      std::cout << "Error\n";
+      skipToChar('{');
+      inputPos++;
+      // this is an error, selectors must be divided by commas
+      std::vector<Selector*> empty; 
+      return empty;
+    }
+  }
+  inputPos++;
+  return selectors;
+}
+
+
+Declaration CSSParser::parseDeclaration() {
+  Declaration d = Declaration();
+  return d;
+  
+}
+
+std::vector<Declaration> CSSParser::parseDeclarations() {
+  std::vector<Declaration> declarations;
+  while (getCurrentChar() != '}') {
+    declarations.push_back(parseDeclaration());
+  }
+  inputPos++;
+  return declarations;
+}
+
+std::vector<Rule*> CSSParser::parse(std::string data)
 {
+  inputPos = 0;
+  input = data;
   std::vector<Rule*> rules;
-  parseSelectors();
+  while (inputPos < input.size()) {
+   Rule* r = new Rule();
+   r->selectors = parseSelectors(); 
+   r->declarations = parseDeclarations();
+   r->display();
+  }
   return rules;
 }
 CSSParser::CSSParser() {

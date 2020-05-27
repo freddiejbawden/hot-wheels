@@ -13,10 +13,10 @@ T remove_if(T beg, T end, P pred)
     return dest;
 }
 
-std::string HTMLPreprocessor::loadFile(std::string filename) {
+std::string Preprocessor::loadFile(std::string filename) {
   std::string line;
   std::string out;
-  std::ifstream myfile ("test.html");
+  std::ifstream myfile (filename);
   if (myfile.is_open())
   {
     while ( getline (myfile,line) )

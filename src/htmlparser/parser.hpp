@@ -3,6 +3,8 @@
 #define HTML_PARSER
 #include <string>
 #include "../nodes/node.hpp"
+#include "../nodes/element.hpp"
+
 class HTMLParser {
  public:
     int inputPos;
@@ -17,7 +19,8 @@ class HTMLParser {
     char getNextChar();
     char getCurrentChar();
     void skipWhitespace();
-    void parseAttribute();
+    std::string parseAttributeString();
+    void parseAttributes(Element *n);
     HTMLParser();
 };
  

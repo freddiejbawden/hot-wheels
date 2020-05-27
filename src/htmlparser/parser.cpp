@@ -34,15 +34,43 @@ std::vector<Node*> HTMLParser::parseNodes() {
   return nodes;
 }
 
+std::string HTMLParser::parseAttributeString() {
+  std::string value = "";
+  while (getCurrentChar() != '=' && getCurrentChar() != '>') {
+    if (getCurrentChar() != '"') {
+     value.push_back(getCurrentChar());
+    }
+    inputPos++;
+  }
+  return value;
+}
+
+void HTMLParser::parseAttributes(Element *n){
+  while(getCurrentChar() != '>') {
+    skipWhitespace();
+    std::string key = parseAttributeString();
+    assert(key != "");
+    //sanity check
+    assert(getCurrentChar() == '=');
+    inputPos++;
+    std::string value = parseAttributeString();
+    assert(value != "");
+    n->addAttribute(key, value);
+  }
+  inputPos++;
+}
+
 Node* HTMLParser::parseElement() {
   // element := TAG | TAG ATTRIBUTE
-  Node* currentNode;
   std::string tag_name;
   tag_name = parseTagName();
-  currentNode = new Element(tag_name);
+  std::cout << tag_name << "\n";
+  Element *currentNode = new Element(tag_name);
   skipWhitespace();
   if (getCurrentChar() == '>') {
     inputPos++;
+  } else {
+    parseAttributes(currentNode);
   }
 
   // recursive call to construct a tree with currentNode

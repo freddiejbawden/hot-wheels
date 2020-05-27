@@ -21,7 +21,7 @@ std::string HTMLPreprocessor::loadFile(std::string filename) {
   {
     while ( getline (myfile,line) )
     {
-      std::string::iterator end_pos = std::remove(line.begin(), line.end(), ' ');
+      std::string::iterator end_pos = std::remove(line.begin(), line.end(), '\n');
       line.erase(end_pos, line.end());
       out.append(line);
     }

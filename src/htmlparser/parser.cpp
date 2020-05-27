@@ -64,7 +64,6 @@ Node* HTMLParser::parseElement() {
   // element := TAG | TAG ATTRIBUTE
   std::string tag_name;
   tag_name = parseTagName();
-  std::cout << tag_name << "\n";
   Element *currentNode = new Element(tag_name);
   skipWhitespace();
   if (getCurrentChar() == '>') {
@@ -89,10 +88,8 @@ Node* HTMLParser::parseElement() {
 }
 
 void HTMLParser::skipWhitespace() {
-  int i = 0;
   char c = getCurrentChar();
-  if (isspace(c)) {
-    i += 1;
+  while (isspace(c)) {
     inputPos++;
     c = getCurrentChar();
   }

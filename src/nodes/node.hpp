@@ -7,7 +7,7 @@
 
 class Node {
   public:
-    std::vector<Node* > children;
+    std::vector<Node*> children;
     virtual void display();
     void displayChildren();
     void addChild(Node *n);

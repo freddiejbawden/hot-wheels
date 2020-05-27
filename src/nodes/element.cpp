@@ -10,7 +10,8 @@ void Element::displayAttributes() {
 }
 
 void Element::display() {
-    std::cout << "(Element " << tag_name;
+
+    std::cout << "(Element " << tag_name << "\n";
     displayAttributes(); 
     displayChildren();
     std::cout << ")\n";

@@ -13,6 +13,8 @@ void Node::displayChildren() {
 }
 
 void Node::display() {
+  std::cout << "Children";
   displayChildren();
+  std::cout<< "\n";
 }
 

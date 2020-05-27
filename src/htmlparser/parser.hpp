@@ -22,6 +22,7 @@ class HTMLParser {
     std::string parseAttributeKey();
     void checkForDoctype();
     void parseAttributes(Element *n);
+    void consumeComment();
     std::string parseAttributeValue();
     HTMLParser();
 };

@@ -13,6 +13,7 @@ char HTMLParser::getCurrentChar() {
 }
 
 Node* HTMLParser::parseNode() {
+  
   char current = getCurrentChar();
   if (current == '<') {
     return parseElement();
@@ -21,11 +22,22 @@ Node* HTMLParser::parseNode() {
   }
 }
 
+void HTMLParser::consumeComment() {
+  while (input.substr(inputPos, 3) != "-->") {
+          inputPos++;
+  }
+  inputPos+=3;
+}
+
 std::vector<Node*> HTMLParser::parseNodes() {
   std::vector<Node*> nodes;
   while (inputPos < input.size()) {
     skipWhitespace();
     // check for end
+    if (input.substr(inputPos, 4) == "<!--") {
+      consumeComment();
+      continue;
+    }
     if (input.substr(inputPos, 2) == "</") {
       break;
     }
@@ -139,17 +151,24 @@ Node* HTMLParser::parseText() {
 }
 
 void HTMLParser::checkForDoctype() {
-  if (input.substr(inputPos, 2) == "<!") {
-    inputPos++;
-    std::string s = parseTagName();
-    std::transform(s.begin(), s.end(),s.begin(), ::toupper);
-    assert(s == "DOCTYPE");
-    std::string doctype_value = parseTagName();
-    assert(doctype_value == "html");
-    assert(getCurrentChar() == '>');
-    inputPos++;
+  bool docTypeProcessed = false;
+  while (!docTypeProcessed) {
+    if (input.substr(inputPos, 2) == "<!") {
+      inputPos++;
+      std::string s = parseTagName();
+      std::transform(s.begin(), s.end(),s.begin(), ::toupper);
+      if (s == "DOCTYPE") {
+        std::string doctype_value = parseTagName();
+        assert(doctype_value == "html");
+        assert(getCurrentChar() == '>');
+        inputPos++;
+      } else {
+        consumeComment();
+      }
+    } else {
+      docTypeProcessed = true;
+    }
   }
-  skipWhitespace();
 }
 
 Node* HTMLParser::parse(std::string inp) {

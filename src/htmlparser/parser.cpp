@@ -34,11 +34,15 @@ std::vector<Node*> HTMLParser::parseNodes() {
   return nodes;
 }
 
+
 std::string HTMLParser::parseAttributeString() {
   std::string value = "";
-  while (getCurrentChar() != '=' && getCurrentChar() != '>') {
+  int quoteCount = 0; 
+  while (getCurrentChar() != '=' && getCurrentChar() != '>' && quoteCount < 2) {
     if (getCurrentChar() != '"') {
      value.push_back(getCurrentChar());
+    } else {
+      quoteCount++;
     }
     inputPos++;
   }

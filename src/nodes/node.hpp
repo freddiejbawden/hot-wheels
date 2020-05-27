@@ -8,8 +8,8 @@
 class Node {
   public:
     std::vector<Node*> children;
-    virtual void display();
-    void displayChildren();
+    virtual void display(int level);
+    void displayChildren(int level);
     void addChild(Node *n);
 };
 #endif

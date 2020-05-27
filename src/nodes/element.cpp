@@ -9,12 +9,13 @@ void Element::displayAttributes() {
 
 }
 
-void Element::display() {
-
-    std::cout << "(Element " << tag_name << "\n";
+void Element::display(int level) {
+    std::cout << tag_name << " ";
     displayAttributes(); 
-    displayChildren();
-    std::cout << ")\n";
+    displayChildren(level);
+    if (level == 0) {
+      std::cout << "\n";
+    }
 }
 
 void Element::addAttribute(std::string attribute_name, std::string attribute_value) {

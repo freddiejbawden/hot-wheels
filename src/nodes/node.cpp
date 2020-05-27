@@ -4,17 +4,25 @@ void Node::addChild(Node *n) {
   children.push_back(n);
 }
 
-void Node::displayChildren() {
-  std::cout << "(\n";
+void Node::displayChildren(int level) {
+  std::cout << "\n";
   for(std::vector<Node* >::size_type i = 0; i != children.size(); i++) {    
-    children[i]->display();
+      std::cout << std::string(level, '\t');
+    if (i == children.size() - 1) {
+      std::cout << "└── ";
+    } else {
+      std::cout << "├── ";
+    }
+    children[i]->display(level + 1);
+    if (i != children.size() - 1) {
+      std::cout << "\n";
+    }
   }
-  std::cout << ")";
 }
 
-void Node::display() {
+void Node::display(int level) {
   std::cout << "Children";
-  displayChildren();
+  displayChildren(level);
   std::cout<< "\n";
 }
 

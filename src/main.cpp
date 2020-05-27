@@ -7,8 +7,7 @@
 int main() {
   std::cout << "Hot wheels\n";
   std::string data = HTMLPreprocessor::loadFile("test.html");
-  std::cout << data << "\n";
   HTMLParser htmlParser = HTMLParser();
   Node* root = htmlParser.parse(data);
-  root->display();
+  root->display(0);
 }

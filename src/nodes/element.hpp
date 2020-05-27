@@ -9,7 +9,7 @@ class Element: public Node {
     std::string tag_name;
     std::unordered_map<std::string, std::string> attributes;
     void displayAttributes();
-    void display();    
+    void display(int level);    
     void addAttribute(std::string attribute_name, std::string attribute_value);
     Element(std::string tn);
 };

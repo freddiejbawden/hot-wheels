@@ -1,7 +1,7 @@
 #include "text.hpp"
 
-void Text::display() {
-  std::cout << "(Text: " << text << ")\n";
+void Text::display(int level) {
+  std::cout << "\"" << text << "\"";
 }
 
 Text::Text(std::string content) {

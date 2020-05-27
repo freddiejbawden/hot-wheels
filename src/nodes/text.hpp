@@ -6,7 +6,7 @@
 class Text: public Node {
   public:
     std::string text;
-    void display();
+    void display(int level);
     Text(std::string content);
 };
 #endif

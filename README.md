@@ -6,7 +6,7 @@ This is extremely stripped back, things like JS are a whole other thing which is
 
 **Goals** 
 
-- [ ] Parse a subset of HTML
+- [x] Parse a subset of HTML
 - [ ] Parse a subset of CSS attributes (tbd)
 - [ ] Arrange elements using blocks
 - [ ] Paint to a window
@@ -15,18 +15,8 @@ This is extremely stripped back, things like JS are a whole other thing which is
 
 Syntax can contain 
 
-- Balanced tags
+- Balanced tags e.g. `<title>...</title>`
 - Attributes
-
-### Currently Supported Tags
-```
-p
-h1
-em
-div
-html
-body
-```
 
 ## How does a browser engine work? 
 

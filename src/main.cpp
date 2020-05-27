@@ -1,6 +1,5 @@
 #include <iostream>
-#include "nodes/element.hpp"
-#include "nodes/text.hpp"
+#include "domnodes/text.hpp"
 #include "preprocessor/preprocessor.hpp"
 #include "htmlparser/parser.hpp"
 

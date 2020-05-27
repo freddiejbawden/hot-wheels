@@ -2,8 +2,8 @@
 #ifndef HTML_PARSER
 #define HTML_PARSER
 #include <string>
-#include "../nodes/node.hpp"
-#include "../nodes/element.hpp"
+#include "../domnodes/node.hpp"
+#include "../domnodes/element.hpp"
 
 class HTMLParser {
  public:
@@ -20,6 +20,7 @@ class HTMLParser {
     char getCurrentChar();
     void skipWhitespace();
     std::string parseAttributeString();
+    void checkForDoctype();
     void parseAttributes(Element *n);
     HTMLParser();
 };

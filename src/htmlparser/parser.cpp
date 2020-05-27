@@ -2,10 +2,11 @@
 #include <vector>
 #include <stdio.h>
 #include <cassert>
+#include <algorithm>
 #include "parser.hpp"
-#include "../nodes/node.hpp"
-#include "../nodes/text.hpp"
-#include "../nodes/element.hpp"
+#include "../domnodes/node.hpp"
+#include "../domnodes/text.hpp"
+#include "../domnodes/element.hpp"
 
 char HTMLParser::getCurrentChar() {
   return input.at(inputPos);
@@ -124,12 +125,25 @@ Node* HTMLParser::parseText() {
   return textNode;
 }
 
+void HTMLParser::checkForDoctype() {
+  if (input.substr(inputPos, 2) == "<!") {
+    inputPos++;
+    std::string s = parseTagName();
+    std::transform(s.begin(), s.end(),s.begin(), ::toupper);
+    assert(s == "DOCTYPE");
+    std::string doctype_value = parseTagName();
+    assert(doctype_value == "html");
+    assert(getCurrentChar() == '>');
+    inputPos++;
+  }
+  skipWhitespace();
+}
 
 Node* HTMLParser::parse(std::string inp) {
   Node root = Node();
   inputPos = 0;
   input = inp;
-  root = Node();
+  checkForDoctype();
   std::vector<Node*> n = parseNodes();
   return n[0];
 } 

@@ -10,6 +10,7 @@ class SimpleSelector : public Selector {
     std::string tag_name;
     std::string id;
     std::vector<std::string> classes;
+    bool is_universal;
     SimpleSelector() = default;
 };
 #endif

@@ -3,7 +3,7 @@
 void Element::displayAttributes() {
   std::cout << "[Attributes: "; 
   for (auto& elm: attributes) {
-    std::cout << elm.first << ":" << elm.second << " ";
+    std::cout << elm.first << "=\"" << elm.second << "\" ";
   }
     std::cout << "] "; 
 

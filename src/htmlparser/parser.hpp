@@ -19,9 +19,10 @@ class HTMLParser {
     char getNextChar();
     char getCurrentChar();
     void skipWhitespace();
-    std::string parseAttributeString();
+    std::string parseAttributeKey();
     void checkForDoctype();
     void parseAttributes(Element *n);
+    std::string parseAttributeValue();
     HTMLParser();
 };
  

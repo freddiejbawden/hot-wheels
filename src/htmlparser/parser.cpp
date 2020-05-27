@@ -35,11 +35,24 @@ std::vector<Node*> HTMLParser::parseNodes() {
   return nodes;
 }
 
-
-std::string HTMLParser::parseAttributeString() {
+std::string HTMLParser::parseAttributeValue() {
   std::string value = "";
   int quoteCount = 0; 
-  while (getCurrentChar() != '=' && getCurrentChar() != '>' && quoteCount < 2) {
+  while (quoteCount < 2) {
+    if (getCurrentChar() != '"') {
+     value.push_back(getCurrentChar());
+    } else {
+      quoteCount++;
+    }
+    inputPos++;
+  }
+  return value;
+}
+
+std::string HTMLParser::parseAttributeKey() {
+  std::string value = "";
+  int quoteCount = 0; 
+  while (getCurrentChar() != '=' && getCurrentChar() != '>') {
     if (getCurrentChar() != '"') {
      value.push_back(getCurrentChar());
     } else {
@@ -53,12 +66,12 @@ std::string HTMLParser::parseAttributeString() {
 void HTMLParser::parseAttributes(Element *n){
   while(getCurrentChar() != '>') {
     skipWhitespace();
-    std::string key = parseAttributeString();
+    std::string key = parseAttributeKey();
     assert(key != "");
     //sanity check
     assert(getCurrentChar() == '=');
     inputPos++;
-    std::string value = parseAttributeString();
+    std::string value = parseAttributeValue();
     assert(value != "");
     n->addAttribute(key, value);
   }

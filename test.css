@@ -1,4 +1,8 @@
-h1,h2,h3 {}
+h1,h2,h3 {
+  float: left;
+  width: 100px;
+  background-color: #ff0000;
+}
 .class1.class2 {}
 #id1, #id{}
 * {}

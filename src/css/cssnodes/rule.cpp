@@ -12,7 +12,8 @@ void Rule::display() {
 
   for (std::vector<Declaration>::iterator it = declarations.begin(); it != declarations.end(); ++it) {
     Declaration d = *it;
-    // s->display();
+    d.display();
+    std::cout << ", ";
   }
   std::cout << ")}\n";
 }

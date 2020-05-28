@@ -8,5 +8,7 @@ class Length : public Value {
   public:
     float value;
     Unit unit;
+    Length() = default;
+    void display();
 };
 #endif

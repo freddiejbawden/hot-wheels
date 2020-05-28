@@ -2,6 +2,7 @@
 #ifndef CSS_UNIT
 #define CSS_UNIT
 enum Unit {
-  px
+  px,
+  invalid
 };
 #endif

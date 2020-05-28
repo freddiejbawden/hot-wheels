@@ -1,6 +1,12 @@
-#include "parser.hpp"
 #include <iostream>
-  
+#include <cassert>
+
+#include "parser.hpp"
+#include "../cssnodes/values/length.hpp"
+#include "../cssnodes/values/color.hpp"
+#include "../cssnodes/values/keyword.hpp"
+
+
 std::string CSSParser::parseIdentifier() 
 {
   std::string identifier = "";
@@ -65,12 +71,97 @@ std::vector<Selector*> CSSParser::parseSelectors() {
   return selectors;
 }
 
+Unit CSSParser::getUnit() {
+  std::string unittext;
+  while (getCurrentChar() != ';') {
+    unittext.push_back(getCurrentChar());
+    inputPos++;
+  }
+  if (unittext == "px") {
+    return px;
+  } else {
+    return invalid;
+  }
+}
+
+std::string CSSParser::parseDeclarationKey() {
+  std::string key;
+  while (getCurrentChar() != ':' && getCurrentChar() != ';') {
+    key.push_back(getCurrentChar());
+    inputPos++;
+  }
+  return key;
+}
+
+uint8_t CSSParser::getColorComponent() {
+  std::string colorvalue = "";
+  colorvalue.push_back(getCurrentChar());
+  inputPos++;
+  colorvalue.push_back(getCurrentChar());
+  inputPos++;
+  uint8_t intvalue = std::stoul(colorvalue, nullptr, 16);
+  return intvalue;
+}
+
+Value* CSSParser::parseDeclarationValue() {
+  if (isnumber(getCurrentChar())) {
+    std::string value;
+    value.push_back(getCurrentChar());
+    inputPos++;
+    bool dot_seen = false;
+    while (isnumber(getCurrentChar()) || getCurrentChar() == '.') {
+      value.push_back(getCurrentChar());
+      inputPos++;
+    }
+    Length* l = new Length();
+    l->value = std::stof(value);
+    l->unit = getUnit();
+    inputPos++;
+    return l;
+  } else if (getCurrentChar() == '#') {
+    inputPos++;
+    Color* color = new Color();
+    //TODO: handle malformed input
+    color->r = getColorComponent();
+    color->g = getColorComponent();
+    color->b = getColorComponent();
+    color->a = (getCurrentChar() == ';') ? 255 : getColorComponent();
+    inputPos++;
+    return color;
+  } else {
+    // must be key word
+    if (getCurrentChar() == '"') {
+      inputPos++;
+    }
+    std::string keyword;
+    while (getCurrentChar() != ';') {
+      keyword.push_back(getCurrentChar());
+      inputPos++;
+    }
+    inputPos++;
+    Keyword* word = new Keyword();
+    word->value = keyword;
+    return word;
+  }
+ }
 
 Declaration CSSParser::parseDeclaration() {
   Declaration d = Declaration();
-  return d;
-  
-}
+  skipWhitespace();
+  std::string key =  parseDeclarationKey();
+  std::cout << key << "\n";
+  std::cout << getCurrentChar() << "\n";
+  assert(getCurrentChar() == ':');
+  inputPos++;
+  skipWhitespace();
+  Value *v = parseDeclarationValue();
+  v->display();
+  std::cout << "\n";
+  d.name = key;
+  d.value = v; 
+  return d; 
+}  
+
 
 std::vector<Declaration> CSSParser::parseDeclarations() {
   std::vector<Declaration> declarations;

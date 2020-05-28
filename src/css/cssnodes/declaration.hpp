@@ -8,5 +8,6 @@ class Declaration {
   public:
     std::string name;
     Value *value;
+    void display();
 };
 #endif

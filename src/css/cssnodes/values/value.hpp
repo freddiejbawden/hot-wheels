@@ -4,5 +4,6 @@
 class Value {
   public:
     virtual ~Value()=0;
+    virtual void display();
 };
 #endif

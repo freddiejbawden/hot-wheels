@@ -149,14 +149,10 @@ Declaration CSSParser::parseDeclaration() {
   Declaration d = Declaration();
   skipWhitespace();
   std::string key =  parseDeclarationKey();
-  std::cout << key << "\n";
-  std::cout << getCurrentChar() << "\n";
   assert(getCurrentChar() == ':');
   inputPos++;
   skipWhitespace();
   Value *v = parseDeclarationValue();
-  v->display();
-  std::cout << "\n";
   d.name = key;
   d.value = v; 
   return d; 
@@ -181,7 +177,7 @@ std::vector<Rule*> CSSParser::parse(std::string data)
    Rule* r = new Rule();
    r->selectors = parseSelectors(); 
    r->declarations = parseDeclarations();
-   r->display();
+   rules.push_back(r);
   }
   return rules;
 }

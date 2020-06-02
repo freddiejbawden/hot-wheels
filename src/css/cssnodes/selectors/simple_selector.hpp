@@ -12,6 +12,7 @@ class SimpleSelector : public Selector {
     std::vector<std::string> classes;
     bool is_universal;
     void display();
+    std::vector<int> getSpecificity();
     SimpleSelector() = default;
 };
 #endif

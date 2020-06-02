@@ -7,7 +7,7 @@ This is extremely stripped back, things like JS are a whole other thing which is
 **Goals** 
 
 - [x] Parse a subset of HTML
-- [ ] Parse a subset of CSS attributes (tbd)
+- [ ] Parse a subset of CSS attributes
 - [ ] Arrange elements using blocks
 - [ ] Paint to a window
 
@@ -23,3 +23,8 @@ Syntax can contain
 The main flow of a browser engine follows a pipe and filter system, HTML and CSS files are fed in as input, parsed and combined to produce a set of requirements for each element on the page, we then calculate the position on screen, producing a render tree which is passed to a painter. 
 
 ![Diagram of Pipe and Filter System](docs/webkitflow.png)
+
+
+## Extenstion Goals
+
+- [ ] Convert CSS parser to use an actual parser generator

@@ -4,11 +4,10 @@
 #include <string>
 #include "../domnodes/node.hpp"
 #include "../domnodes/element.hpp"
+#include "../parser.hpp"
 
-class HTMLParser {
+class HTMLParser : public Parser {
  public:
-    int inputPos;
-    std::string input;
     Node *root;
     Node* parse(std::string inp);
     Node* parseNode();
@@ -17,12 +16,9 @@ class HTMLParser {
     std::string parseTagName();
     Node* parseText();
     char getNextChar();
-    char getCurrentChar();
-    void skipWhitespace();
     std::string parseAttributeKey();
     void checkForDoctype();
     void parseAttributes(Element *n);
-    void consumeComment();
     std::string parseAttributeValue();
     HTMLParser();
 };

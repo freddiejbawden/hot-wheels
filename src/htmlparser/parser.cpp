@@ -8,9 +8,6 @@
 #include "../domnodes/text.hpp"
 #include "../domnodes/element.hpp"
 
-char HTMLParser::getCurrentChar() {
-  return input.at(inputPos);
-}
 
 Node* HTMLParser::parseNode() {
   
@@ -22,19 +19,13 @@ Node* HTMLParser::parseNode() {
   }
 }
 
-void HTMLParser::consumeComment() {
-  while (input.substr(inputPos, 3) != "-->") {
-          inputPos++;
-  }
-  inputPos+=3;
-}
 
 std::vector<Node*> HTMLParser::parseNodes() {
   std::vector<Node*> nodes;
   while (inputPos < input.size()) {
     skipWhitespace();
     // check for end
-    if (input.substr(inputPos, 4) == "<!--") {
+    if (checkForComment()) {
       consumeComment();
       continue;
     }
@@ -117,13 +108,6 @@ Node* HTMLParser::parseElement() {
   return currentNode;
 }
 
-void HTMLParser::skipWhitespace() {
-  char c = getCurrentChar();
-  while (isspace(c)) {
-    inputPos++;
-    c = getCurrentChar();
-  }
-}
 
 std::string HTMLParser::parseTagName() {
    std::string tag;
@@ -181,4 +165,6 @@ Node* HTMLParser::parse(std::string inp) {
 } 
 HTMLParser::HTMLParser() {
   inputPos = 0;
+  commentOpen = "<!--";
+  commentClose = "-->";
 }

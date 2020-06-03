@@ -7,7 +7,7 @@
 #include "../domnodes/node.hpp"
 #include "../css/cssnodes/rule.hpp"
 #include "../css/cssnodes/declaration.hpp"
-
+#include "displayType.hpp"
 #include "../css/cssnodes/selectors/simple_selector.hpp"
 
 class StyledNode {
@@ -19,7 +19,10 @@ class StyledNode {
     void match(std::vector<Rule*> styleRules);
     bool matchSimpleSelector(SimpleSelector* s);
     void attatchDeclarations(std::vector<Declaration> d);
-    void display();
+    void display(int level);
+    void displayChildren(int level);
+    Value* getPropertyValue(std::string property);
+    DisplayType getDisplayType();
 };
 
 #endif

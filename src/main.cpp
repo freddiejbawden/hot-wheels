@@ -20,7 +20,7 @@ int main() {
 
   StyledNode* rootStyledNode = new StyledNode(root, rules);
   std::cout << "style tree compiled\n";
-  rootStyledNode->display();
+  rootStyledNode->display(0);
 
 
 }

@@ -2,26 +2,73 @@
 #include "styletree.hpp"
 #include "../domnodes/text.hpp"
 #include "../domnodes/element.hpp"
+#include "../css/cssnodes/values/keyword.hpp"
 
-
-void StyledNode::display() {
+void StyledNode::display(int level) {
   if (typeid(*node) == typeid(Element)) {
     Element *e = (Element*) node;
-    std::cout << e->tag_name << " {";
-    for(auto& prop: properties) {
-      std::cout << prop.first << ": " << prop.second << " ";
+    std::cout << e->tag_name;
+    if (properties.bucket_count() > 0) {
+      std::cout << " {";
+      size_t j = 0;
+      for(auto& prop: properties) {
+        std::cout << prop.first << ": ";
+        Value* v = prop.second;
+        v->display();
+        if (j < properties.bucket_count() - 1) {
+          std::cout << ", ";
+        }
+        j++;
+      }
+      std::cout << "}";
+    }
+  } else if (typeid(*node) == typeid(Text)) {
+    Text *t = (Text*) node;
+    std::cout << '"' << t->text << '"';
+  }
+  displayChildren(level);
+}
+
+void StyledNode::displayChildren(int level) {
+  std::cout << "\n";
+  for (std::vector<StyledNode* >::size_type i = 0; i != children.size(); i++) {
+     std::cout << std::string(level, '\t');
+     if (i == children.size() - 1) {
+      std::cout << "└── ";
+    } else {
+      std::cout << "├── ";
+    }
+    children[i]->display(level + 1);
+    if (i != children.size() - 1) {
     }
   }
-  std::cout << "}\n";
-  for (std::vector<StyledNode*>::iterator it = children.begin(); it != children.end(); ++it) {
-    (*it)->display();
-  }
+}
 
+Value* StyledNode::getPropertyValue(std::string property) {
+  if (properties.count(property) == 0) {
+    return NULL;
+  }
+  return properties[property];
+}
+
+DisplayType StyledNode::getDisplayType() {
+  Value* value = getPropertyValue("display");
+  if (value == NULL) {
+    return DisplayType::None;
+  }
+  Keyword *keywordValue = (Keyword*) value;
+  if (keywordValue->value == "block") {
+    return DisplayType::Block;
+  } else if (keywordValue->value == "none") {
+    return DisplayType::None;
+  } else  {
+    return DisplayType::Inline;
+  }
 }
 // This whole thing needs tidied, bad polymorphism i think
 StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules) {
   node = domNodeRoot;
-  // we can't style text nodes so return
+
   if (typeid(*domNodeRoot) == typeid(Text)) return;
   
   properties = std::unordered_map<std::string, Value*>();

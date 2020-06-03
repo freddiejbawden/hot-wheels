@@ -7,7 +7,22 @@
 void StyledNode::display(int level) {
   if (typeid(*node) == typeid(Element)) {
     Element *e = (Element*) node;
-    std::cout << e->tag_name;
+    std::cout << e->tag_name << " [";
+    switch (getDisplayType()) 
+    {
+    case DisplayType::Block:
+      std::cout << "display: block] ";
+      break;
+    case DisplayType::Inline:
+      std::cout << "display: inline] ";
+      break;
+    case DisplayType::None:
+      std::cout << "display: none] ";
+      break;
+    default:
+      std::cout << "display: unknown] ";
+      break;
+    }
     if (properties.bucket_count() > 0) {
       std::cout << " {";
       size_t j = 0;
@@ -54,7 +69,7 @@ Value* StyledNode::getPropertyValue(std::string property) {
 DisplayType StyledNode::getDisplayType() {
   Value* value = getPropertyValue("display");
   if (value == NULL) {
-    return DisplayType::None;
+    return DisplayType::Block;
   }
   Keyword *keywordValue = (Keyword*) value;
   if (keywordValue->value == "block") {
@@ -104,6 +119,7 @@ void  StyledNode::match(std::vector<Rule*> rules) {
     }
   }
 }
+
 bool StyledNode::matchSimpleSelector(SimpleSelector* s) {
   Element* e = (Element*) node;
   

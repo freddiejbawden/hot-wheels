@@ -5,6 +5,7 @@
 #include "css/cssparser/parser.hpp"
 #include "domnodes/element.hpp"
 #include "styletree/styletree.hpp"
+#include "layout/layoutBox.hpp"
 
 int main() {
   std::cout << "Hot wheels\n";
@@ -20,7 +21,10 @@ int main() {
 
   StyledNode* rootStyledNode = new StyledNode(root, rules);
   std::cout << "style tree compiled\n";
-  rootStyledNode->display(0);
+
+  LayoutBox* layoutBox = new LayoutBox(rootStyledNode);
+  std::cout << "Layout boxes computed\n";
+  layoutBox->display(0);
 
 
 }

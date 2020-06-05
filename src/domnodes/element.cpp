@@ -22,6 +22,13 @@ void Element::addAttribute(std::string attribute_name, std::string attribute_val
   attributes[attribute_name] = attribute_value;
 }
 
+std::string Element::getAttribute(std::string attribute_name) {
+  if (attributes.count(attribute_name) != 0) {
+    return attributes[attribute_name];
+  }
+  return "";
+}
+
 
 std::string Element::getId() {
   auto id = attributes.find("id");

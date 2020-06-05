@@ -12,5 +12,6 @@ class Color : public Value {
     uint8_t a;
     Color() = default;
     void display();
+    float toPX();
 };
 #endif

@@ -41,6 +41,11 @@ class LayoutBox {
     LayoutBox();
     void setBoxType();
     LayoutBox* createAnonymousInlineBox();
+    void createLayout(Dimensions parent);
+    void calculateWidth(Dimensions parent);
+    void calculatePosition(Dimensions parent);
+    void calculateChildren();
+    void calculateHeight(Dimensions parent);
 
 };
 

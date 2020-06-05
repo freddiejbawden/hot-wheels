@@ -22,6 +22,9 @@ class StyledNode {
     void display(int level);
     void displayChildren(int level);
     Value* getPropertyValue(std::string property);
+    Value* getPropertyValueOrDefault(std::string property, Value* d);
+    Value* getPropertyValueOrDefault(std::string property1,std::string property2, Value* d);
+
     DisplayType getDisplayType();
 };
 

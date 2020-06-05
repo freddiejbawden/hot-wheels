@@ -21,10 +21,14 @@ int main() {
 
   StyledNode* rootStyledNode = new StyledNode(root, rules);
   std::cout << "style tree compiled\n";
-
+  rootStyledNode->display(0);
   LayoutBox* layoutBox = new LayoutBox(rootStyledNode);
   std::cout << "Layout boxes computed\n";
-  layoutBox->display(0);
+  Dimensions viewport = Dimensions();
+  viewport.content = Rect();
+  viewport.content.width = 1000;
+  viewport.content.height = 1000;
+  layoutBox->createLayout(viewport);
 
 
 }

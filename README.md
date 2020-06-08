@@ -29,7 +29,7 @@ Syntax can contain
 
 We have paint! We can paint colored rectangles!!!
 
-<img src="docs/rainbowdiv.png" alt="Rainbow colored divs">
+<img src="docs/rainbowdiv.png" width="300" alt="Rainbow colored divs" >
 
 ## How does a browser engine work? 
 

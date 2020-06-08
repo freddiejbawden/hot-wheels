@@ -6,10 +6,17 @@ This is extremely stripped back, things like JS are a whole other thing which is
 
 **Goals** 
 
+**Milestone 1**
 - [x] Parse a subset of HTML
 - [x] Parse a subset of CSS attributes
 - [x] Arrange elements using blocks
 - [x] Paint to a window
+
+**Milestone 2**
+- [ ] Draw Inline Boxes
+- [ ] Render text in boxes
+- [ ] Link tags
+- [ ] Style tags
 
 ## HTML Subset
 
@@ -31,6 +38,3 @@ The main flow of a browser engine follows a pipe and filter system, HTML and CSS
 ![Diagram of Pipe and Filter System](docs/webkitflow.png)
 
 
-## Extenstion Goals
-
-- [ ] Convert CSS parser to use an actual parser generator

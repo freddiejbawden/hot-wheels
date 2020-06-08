@@ -106,14 +106,16 @@ StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules) {
 
   if (typeid(*domNodeRoot) == typeid(Text)) return;
   
-
-
   properties = std::unordered_map<std::string, Value*>();
   Element*  elm = (Element*) node;
   // check for widtth and height attributes and add to styling
   if (elm->getAttribute("width") != "") {
     std::string attrWidth = elm->getAttribute("width");
     properties["width"] = new Length(attrWidth);
+  }
+  if (elm->getAttribute("height") != "") {
+    std::string attrWidth = elm->getAttribute("height");
+    properties["height"] = new Length(attrWidth);
   }
   children = std::vector<StyledNode*>();
   match(styleRules);

@@ -7,7 +7,7 @@
 #include "../css/cssnodes/values/length.hpp"
 #include "../css/cssnodes/values/keyword.hpp"
 
-// this should be turned into an interface probably
+// this REALLY should be into an interface, this is just handling block display 
 void LayoutBox::display(int level) {
   if (node == NULL) {
     std::cout << "[";
@@ -125,7 +125,6 @@ LayoutBox::LayoutBox() {
 
 void LayoutBox::calculateWidth(Dimensions d) {
    
-  std::cout << "Calculating Width\n";
   // make lengtth constructor that takes values
   Keyword* autoWidth = new Keyword();
   autoWidth->value = "auto";
@@ -167,6 +166,7 @@ void LayoutBox::calculateWidth(Dimensions d) {
       }
     }
   }
+
 
   float underflow = d.content.width - total;
 
@@ -216,11 +216,13 @@ void LayoutBox::calculateWidth(Dimensions d) {
       width = new Length(0.0);
       margin_right = new Length(margin_right->toPX() + underflow);
     }
+  } else {
+    if (margin_left == autoWidth && margin_right == autoWidth) {
+      margin_left = new Length(underflow / 2.0);
+      margin_right = new Length(underflow / 2.0);
+    }
   }
-  if (margin_left == autoWidth && margin_right == autoWidth) {
-    margin_left = new Length(underflow / 2.0);
-    margin_right = new Length(underflow / 2.0);
-  }
+  
   dimensions.border.left = border_left->toPX();
   dimensions.border.right = border_right->toPX();
   dimensions.margin.left = margin_left->toPX();
@@ -228,12 +230,42 @@ void LayoutBox::calculateWidth(Dimensions d) {
   dimensions.padding.left = padding_left->toPX();
   dimensions.padding.right = padding_right->toPX();
   dimensions.content.width = width->toPX();
-  std::cout <<  ((Element*) node->node)->tag_name << "is " <<width->toPX() << "px wide\n";
 } 
 
+void LayoutBox::calculatePosition(Dimensions parent) {
+  Length* zero = new Length(0.0);
+  dimensions.margin.top = node->getPropertyValueOrDefault("margin-top", "margin", zero)->toPX();
+  dimensions.margin.bottom = node->getPropertyValueOrDefault("margin-bottom", "margin", zero)->toPX();
+
+  dimensions.border.top = node->getPropertyValueOrDefault("border-top-width", "border-width", zero)->toPX();
+  dimensions.border.bottom = node->getPropertyValueOrDefault("border-bottom-width", "border-width", zero)->toPX();
+
+  dimensions.padding.top = node->getPropertyValueOrDefault("padding-top", "padding", zero)->toPX();
+  dimensions.padding.bottom = node->getPropertyValueOrDefault("padding-bottom", "padding", zero)->toPX();
+  dimensions.content.x = parent.content.x + dimensions.margin.left + dimensions.border.left + dimensions.padding.left;
+  dimensions.content.y = parent.content.y + dimensions.margin.top + dimensions.border.top + dimensions.padding.top;
+}
+
+void LayoutBox::calculateChildren() {
+  for (std::vector<LayoutBox*>::iterator it = children.begin(); it != children.end(); ++it) {
+    LayoutBox* child = (*it);
+    child->createLayout(dimensions);
+    dimensions.content.height = dimensions.content.height + child->dimensions.marginBox()->height;
+  }
+}
+
+void LayoutBox::calculateHeight() {
+  Value* height = node->getPropertyValue("height");
+  if (height != NULL) {
+    dimensions.content.height = height->toPX();
+  }
+}
 
 void LayoutBox::createLayout(Dimensions d) {
   calculateWidth(d);
+  calculatePosition(d);
+  calculateChildren();
+  calculateHeight();
 }
 
 

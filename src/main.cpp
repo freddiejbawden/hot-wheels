@@ -6,6 +6,7 @@
 #include "domnodes/element.hpp"
 #include "styletree/styletree.hpp"
 #include "layout/layoutBox.hpp"
+#include "painter/layoutpainter.hpp"
 
 int main() {
   std::cout << "Hot wheels\n";
@@ -26,9 +27,11 @@ int main() {
   std::cout << "Layout boxes computed\n";
   Dimensions viewport = Dimensions();
   viewport.content = Rect();
-  viewport.content.width = 1000;
-  viewport.content.height = 1000;
+  viewport.content.width = 500;
+  viewport.content.height = 500;
   layoutBox->createLayout(viewport);
-
+  LayoutPainter* painter = new LayoutPainter(layoutBox, viewport);
+  painter->drawLayoutBox(layoutBox);
+  painter->hold();
 
 }

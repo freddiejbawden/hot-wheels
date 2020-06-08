@@ -2,31 +2,9 @@
 #ifndef LAYOUT_BOX
 #define LAYOUT_BOX
 
+#include "dimensions.hpp"
 #include "boxType.hpp"
 #include "../styletree/styletree.hpp"
-
-typedef struct Rect {
-    float x;
-    float y;
-    float width;
-    float height;
-} Rect;
-
-typedef struct EdgeSizes {
-    float left;
-    float right;
-    float top;
-    float bottom;
-} EdgeSizes;
-
-typedef struct Dimensions {
-    Rect content;
-
-    // Surrounding edges:
-    EdgeSizes padding;
-    EdgeSizes border;
-    EdgeSizes margin;
-} Dimensions;
 
 class LayoutBox {
   public:
@@ -45,7 +23,7 @@ class LayoutBox {
     void calculateWidth(Dimensions parent);
     void calculatePosition(Dimensions parent);
     void calculateChildren();
-    void calculateHeight(Dimensions parent);
+    void calculateHeight();
 
 };
 

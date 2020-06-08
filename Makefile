@@ -10,8 +10,8 @@ OBJ = $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 STD=c++11
 
 CFLAGS += -Wall
-CPPFLAGS += -std=$(STD) -Wno-c++11-extensions
-LDFLAGS=
+CPPFLAGS += -std=$(STD) -Wno-c++11-extensions -O0
+LDFLAGS=-lSDL2
 
 .PHONY: all clean debug
 

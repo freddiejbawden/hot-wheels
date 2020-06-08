@@ -13,6 +13,7 @@ class Element: public Node {
     std::string getId();
     std::unordered_map<std::string, bool>  getClasses();
     void addAttribute(std::string attribute_name, std::string attribute_value);
+    std::string getAttribute(std::string attribute_name);
     Element(std::string tn);
 };
 

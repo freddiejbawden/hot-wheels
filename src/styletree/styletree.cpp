@@ -3,6 +3,7 @@
 #include "../domnodes/text.hpp"
 #include "../domnodes/element.hpp"
 #include "../css/cssnodes/values/keyword.hpp"
+#include "../css/cssnodes/values/length.hpp"
 
 void StyledNode::display(int level) {
   if (typeid(*node) == typeid(Element)) {
@@ -58,6 +59,25 @@ void StyledNode::displayChildren(int level) {
     }
   }
 }
+Value* StyledNode::getPropertyValueOrDefault(std::string property1,std::string property2, Value* d) {
+  if (properties.count(property1) == 0) {
+    if (properties.count(property2) == 0) {
+      return d;
+    } else {
+      return properties[property2];
+    }
+  } else {
+    return properties[property1];
+  }
+}
+
+
+Value* StyledNode::getPropertyValueOrDefault(std::string property, Value* d) {
+  if (properties.count(property) == 0) {
+    return d;
+  }
+  return properties[property];
+}
 
 Value* StyledNode::getPropertyValue(std::string property) {
   if (properties.count(property) == 0) {
@@ -87,9 +107,19 @@ StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules) {
   if (typeid(*domNodeRoot) == typeid(Text)) return;
   
   properties = std::unordered_map<std::string, Value*>();
+  Element*  elm = (Element*) node;
+  // check for widtth and height attributes and add to styling
+  if (elm->getAttribute("width") != "") {
+    std::string attrWidth = elm->getAttribute("width");
+    properties["width"] = new Length(attrWidth);
+  }
+  if (elm->getAttribute("height") != "") {
+    std::string attrWidth = elm->getAttribute("height");
+    properties["height"] = new Length(attrWidth);
+  }
   children = std::vector<StyledNode*>();
   match(styleRules);
-  
+ 
   // recurse to children
   for (std::vector<Node*>::iterator it = domNodeRoot->children.begin(); it != domNodeRoot->children.end(); ++it) {
     children.push_back(new StyledNode(*it, styleRules));

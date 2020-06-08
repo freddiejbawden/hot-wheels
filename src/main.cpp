@@ -6,6 +6,7 @@
 #include "domnodes/element.hpp"
 #include "styletree/styletree.hpp"
 #include "layout/layoutBox.hpp"
+#include "painter/layoutpainter.hpp"
 
 int main() {
   std::cout << "Hot wheels\n";
@@ -21,10 +22,16 @@ int main() {
 
   StyledNode* rootStyledNode = new StyledNode(root, rules);
   std::cout << "style tree compiled\n";
-
+  rootStyledNode->display(0);
   LayoutBox* layoutBox = new LayoutBox(rootStyledNode);
   std::cout << "Layout boxes computed\n";
-  layoutBox->display(0);
-
+  Dimensions viewport = Dimensions();
+  viewport.content = Rect();
+  viewport.content.width = 500;
+  viewport.content.height = 500;
+  layoutBox->createLayout(viewport);
+  LayoutPainter* painter = new LayoutPainter(layoutBox, viewport);
+  painter->drawLayoutBox(layoutBox);
+  painter->hold();
 
 }

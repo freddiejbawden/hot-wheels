@@ -7,9 +7,9 @@ This is extremely stripped back, things like JS are a whole other thing which is
 **Goals** 
 
 - [x] Parse a subset of HTML
-- [ ] Parse a subset of CSS attributes
-- [ ] Arrange elements using blocks
-- [ ] Paint to a window
+- [x] Parse a subset of CSS attributes
+- [x] Arrange elements using blocks
+- [x] Paint to a window
 
 ## HTML Subset
 
@@ -17,6 +17,12 @@ Syntax can contain
 
 - Balanced tags e.g. `<title>...</title>`
 - Attributes
+
+## Current State
+
+We have paint! We can paint colored rectangles!!!
+
+<img src="docs/rainbowdiv.png" alt="Rainbow colored divs">
 
 ## How does a browser engine work? 
 

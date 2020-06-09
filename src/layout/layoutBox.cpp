@@ -7,8 +7,9 @@
 #include "../css/cssnodes/values/length.hpp"
 #include "../css/cssnodes/values/keyword.hpp"
 #include "blockBox.hpp"
+#include "inlineBox.hpp"
+#include "anonymousBox.hpp"
 
-// this REALLY should be into an interface, this is just handling block display 
 void LayoutBox::display(int level) {
   if (node == NULL) {
     std::cout << "[";
@@ -25,21 +26,14 @@ void LayoutBox::display(int level) {
       exit(1); 
     }
   } 
-  switch (box_type) 
-  {
-  case BoxType::BoxBlock:
+  if (typeid(*this) == typeid(BlockBox)) {
     std::cout << "box: block] ";
-    break;
-  case BoxType::BoxInline:
+  } else if (typeid(*this) == typeid(InlineBox)) {
     std::cout << "box: inline] ";
-    break;
-  case BoxType::BoxAnonymous:
+  } else if (typeid(*this) == typeid(AnonymousBox)) {
     std::cout << "box: anonymous] ";
-    break;
-  default:
-    std::cout << "Unknown box type!";
-    exit(1);
-    break;
+  } else {
+    std::cout << "WTF";
   }
   displayChildren(level);
 }
@@ -56,69 +50,32 @@ void LayoutBox::displayChildren(int level) {
     children[i]->display(level + 1);
   }
 }
-void LayoutBox::setBoxType() {
-  switch (node->getDisplayType())
-  {
-  case DisplayType::Block: 
-    {
-        box_type = BoxType::BoxBlock;
-    };
-    break;
-    case DisplayType::Inline: 
-      {
-        box_type = BoxType::BoxInline;
-      } 
-      break;
-    case DisplayType::None: 
-      {
-        std::cout << "Root is display:none!"; exit(1); 
-      } 
-    break;
-  default:
-    {
-      std::cout << "Root is display:none!"; exit(1); 
-    }
-    break;
-  }
-}
+
 
 LayoutBox* LayoutBox::createAnonymousInlineBox() {
-  switch(box_type) {
-    case BoxType::BoxInline: 
-      {
-        return this;
+  
+  if (node->getDisplayType() == DisplayType::Inline) {
+    return this;
+  } else if (node->getDisplayType() == DisplayType::Block) {
+    if (children.size() > 0) {
+      LayoutBox* last = children.back();
+      if (typeid(*last) != typeid(AnonymousBox)) {
+        children.push_back(new AnonymousBox());
       }
-      break;
-    case BoxType::BoxAnonymous: 
-      {
-        return this;
-      }
-      break;
-    case BoxType::BoxBlock:
-      {
-        if (children.size() > 0) {
-          LayoutBox* last = children.back();
-          if (last->box_type != BoxType::BoxAnonymous) {
-            children.push_back(new LayoutBox());
-          }
-        } else {
-          children.push_back(new LayoutBox());
-        }
-        return children.back();
-
-      }
-      break;
-    default:
-      {
-        std::cout << "BoxType unknown\n"; 
-        exit(1);
-      }
+    } else {
+      children.push_back(new AnonymousBox());
+    }
+    return children.back();
+  } else if (typeid(*this) == typeid(AnonymousBox)) {
+    return this;
+  } else {
+    Element *elm = (Element*) node->node;
+    std::cout << "Error when creating anonymous box for tag: " << elm->tag_name << "\n"; 
+    return this;
   }
-  return this;
 }
 
 LayoutBox::LayoutBox() {
-  box_type = BoxType::BoxAnonymous;
   node = NULL;
 }
 
@@ -154,7 +111,6 @@ void LayoutBox::createLayout(Dimensions d) {
 LayoutBox::LayoutBox(StyledNode* root)
 {
   node = root; 
-  setBoxType();
 
   for (std::vector<StyledNode*>::iterator it = node->children.begin(); it != node->children.end(); ++it) {
     StyledNode* child = (*it);
@@ -166,8 +122,8 @@ LayoutBox::LayoutBox(StyledNode* root)
         break;
       case DisplayType::Inline:
         {
-          // need to wrap in an inliine container first
-          createAnonymousInlineBox()->children.push_back(new LayoutBox(child));
+          // need to wrap in an inline container first
+          createAnonymousInlineBox()->children.push_back(new InlineBox(child));
         } 
         break;
       case DisplayType::None:

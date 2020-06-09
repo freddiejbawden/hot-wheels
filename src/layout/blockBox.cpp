@@ -50,7 +50,6 @@ void BlockBox::calculateWidth(Dimensions parent) {
     }
   }
 
-
   float underflow = parent.content.width - total;
 
   /*Condition 2: If all of the above have a computed value other than 'auto', the values are said 
@@ -136,6 +135,7 @@ void BlockBox::calculateChildren() {
   }
 }
 void BlockBox::calculateHeight() {
+  //what if it has text as a child
   Value* height = node->getPropertyValue("height");
   if (height != NULL) {
     dimensions.content.height = height->toPX();

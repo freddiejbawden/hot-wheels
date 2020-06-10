@@ -6,10 +6,17 @@ This is extremely stripped back, things like JS are a whole other thing which is
 
 **Goals** 
 
+**Milestone 1**
 - [x] Parse a subset of HTML
 - [x] Parse a subset of CSS attributes
 - [x] Arrange elements using blocks
 - [x] Paint to a window
+
+**Milestone 2**
+- [ ] Draw Inline Boxes
+- [ ] Render text in boxes
+- [ ] Link tags
+- [ ] Style tags
 
 ## HTML Subset
 
@@ -22,7 +29,7 @@ Syntax can contain
 
 We have paint! We can paint colored rectangles!!!
 
-<img src="docs/rainbowdiv.png" alt="Rainbow colored divs">
+<img src="docs/rainbowdiv.png" width="300" alt="Rainbow colored divs" >
 
 We can also draw text! Taking the HTML and CSS:
 ```html
@@ -49,6 +56,3 @@ The main flow of a browser engine follows a pipe and filter system, HTML and CSS
 ![Diagram of Pipe and Filter System](docs/webkitflow.png)
 
 
-## Extenstion Goals
-
-- [ ] Convert CSS parser to use an actual parser generator

@@ -6,13 +6,13 @@
 #include <string>
 class Length : public Value {
   public:
-    float value;
+    int value;
     Unit unit;
-   Length(float value);
+   Length(int value);
 
     Length(std::string str_value);
     Length() = default;
     void display();
-    float toPX();
+    int toPX();
 };
 #endif

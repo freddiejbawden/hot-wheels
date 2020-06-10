@@ -10,6 +10,10 @@
 #include "inlineBox.hpp"
 #include "anonymousBox.hpp"
 
+void LayoutBox::displayBoxType() {
+  std::cout << "box: layoutbox ";
+}
+
 void LayoutBox::display(int level) {
   if (node == NULL) {
     std::cout << "[";
@@ -26,15 +30,9 @@ void LayoutBox::display(int level) {
       exit(1); 
     }
   } 
-  if (typeid(*this) == typeid(BlockBox)) {
-    std::cout << "box: block] ";
-  } else if (typeid(*this) == typeid(InlineBox)) {
-    std::cout << "box: inline] ";
-  } else if (typeid(*this) == typeid(AnonymousBox)) {
-    std::cout << "box: anonymous] ";
-  } else {
-    std::cout << "WTF";
-  }
+  displayBoxType();
+  Rect content = dimensions.content;
+  std::cout << ", { x:" << content.x << ", y:" << content.y << ", w:" << content.width << ", h:" << content.height << "}]";
   displayChildren(level);
 }
 

@@ -7,7 +7,7 @@ class Keyword : public Value {
   public:
     std::string value;
     void display();
-    float toPX();
+    int toPX();
 };
 
 #endif

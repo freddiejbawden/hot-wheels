@@ -6,6 +6,10 @@
 #include "../css/cssnodes/values/keyword.hpp"
 BlockBox::BlockBox(StyledNode* node) : LayoutBox(node) {};
 
+void BlockBox::displayBoxType() {
+  std::cout << "box: block ";
+}
+
 void BlockBox::calculateWidth(Dimensions parent) {
     
   // make lengtth constructor that takes values
@@ -23,7 +27,7 @@ void BlockBox::calculateWidth(Dimensions parent) {
   Value* padding_right = node->getPropertyValueOrDefault("padding-right", "padding", autoWidth);
   std::vector<Value*> widths = std::vector<Value*>{width, margin_left, margin_right, border_left, border_right, padding_left, padding_right};
   // the total must be equal to the width of the containing block
-  float total = 0.0;
+  int total = 0;
   for (std::vector<Value*>::iterator it = widths.begin(); it != widths.end(); ++it) {
     Value* v = *it;
     total += v->toPX();
@@ -35,7 +39,7 @@ void BlockBox::calculateWidth(Dimensions parent) {
   'auto') is larger than the width of the containing block, then any 'auto' values for 'margin-left' 
   or 'margin-right' are, for the following rules, treated as zero. */
   if (width != autoWidth) {
-    float cond1Sum =  border_left->toPX() + padding_left->toPX() + width->toPX() 
+    int cond1Sum =  border_left->toPX() + padding_left->toPX() + width->toPX() 
                       + padding_right->toPX() + border_right->toPX();
 
     if (margin_left   != autoWidth) cond1Sum += margin_left->toPX();
@@ -50,7 +54,7 @@ void BlockBox::calculateWidth(Dimensions parent) {
     }
   }
 
-  float underflow = parent.content.width - total;
+  int underflow = parent.content.width - total;
 
   /*Condition 2: If all of the above have a computed value other than 'auto', the values are said 
   to be "over-constrained" and one of the used values will have to be different from its computed 

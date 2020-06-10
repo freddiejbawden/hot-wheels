@@ -6,10 +6,10 @@
 
 class Rect {
   public:
-    float x;
-    float y;
-    float width;
-    float height;
+    int x;
+    int y;
+    int width;
+    int height;
     Rect* expandedBy(EdgeSizes edge);
     Rect() = default;
 };

@@ -11,7 +11,7 @@ STD=c++11
 
 CFLAGS += -Wall
 CPPFLAGS += -std=$(STD) -Wno-c++11-extensions -O0
-LDFLAGS=-lSDL2
+LDFLAGS=-lSDL2 -lsdl2_ttf
 
 .PHONY: all clean debug
 

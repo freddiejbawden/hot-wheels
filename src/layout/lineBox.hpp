@@ -1,16 +1,15 @@
 #pragma once
-#ifndef INLINE_BOX
-#define INLINE_BOX
+#ifndef LINE_BOX
+#define LINE_BOX
 #include "layoutBox.hpp"
 
-class InlineBox : public LayoutBox {
+class LineBox : public LayoutBox {
   public:
-    InlineBox(StyledNode* node);
-    void calculateWidth(Dimensions parent);
+    LineBox();
+        void calculateWidth(Dimensions parent);
     void calculatePosition(Dimensions parent);
     void calculateChildren();
     void calculateHeight();
     void displayBoxType();
 };
-
-#endif
+#endif 

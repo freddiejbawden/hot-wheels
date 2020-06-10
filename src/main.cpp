@@ -7,6 +7,7 @@
 #include "styletree/styletree.hpp"
 #include "layout/blockBox.hpp"
 #include "painter/layoutpainter.hpp"
+#include "layout/fontmanager/fontmanager.hpp"
 
 int main() {
   std::cout << "Hot wheels\n";
@@ -25,12 +26,12 @@ int main() {
   rootStyledNode->display(0);
   LayoutBox* layoutBox = new BlockBox(rootStyledNode);
   std::cout << "Layout boxes computed\n";
-  layoutBox->display(0);
   Dimensions viewport = Dimensions();
   viewport.content = Rect();
   viewport.content.width = 500;
   viewport.content.height = 500;
   layoutBox->createLayout(viewport);
+  layoutBox->display(0);
   LayoutPainter* painter = new LayoutPainter(layoutBox, viewport);
   painter->drawLayoutBox(layoutBox);
   painter->hold();

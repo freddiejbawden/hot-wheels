@@ -24,6 +24,7 @@ class LayoutBox {
     virtual void calculatePosition(Dimensions parent);
     virtual void calculateChildren();
     virtual void calculateHeight();
+    virtual void displayBoxType();
 
 };
 

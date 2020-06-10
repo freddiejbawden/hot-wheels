@@ -4,10 +4,10 @@
 
 class EdgeSizes {
   public:
-    float left;
-    float right;
-    float top;
-    float bottom;
+    int left;
+    int right;
+    int top;
+    int bottom;
 };
 
 #endif

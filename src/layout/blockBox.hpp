@@ -10,6 +10,7 @@ class BlockBox : public LayoutBox {
     void calculatePosition(Dimensions parent);
     void calculateChildren();
     void calculateHeight();
+    void displayBoxType();
 
 };
 

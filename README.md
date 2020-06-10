@@ -24,6 +24,24 @@ We have paint! We can paint colored rectangles!!!
 
 <img src="docs/rainbowdiv.png" alt="Rainbow colored divs">
 
+We can also draw text! Taking the HTML and CSS:
+```html
+<!doctype html>
+<html>
+  <p>Hello <span>world</span></p>
+  <p>It's working</p>
+  <p>IT'S WORKING!</p>
+
+</html>
+```
+```css
+span {
+  background-color: #00ff00ff;
+}
+```
+we produce: 
+<img src="docs/itsworking.png" alt="Screenshot of text being rendered">
+
 ## How does a browser engine work? 
 
 The main flow of a browser engine follows a pipe and filter system, HTML and CSS files are fed in as input, parsed and combined to produce a set of requirements for each element on the page, we then calculate the position on screen, producing a render tree which is passed to a painter. 

@@ -12,10 +12,10 @@ void AnonymousBox::calculateWidth(Dimensions parent) {
 };
 void AnonymousBox::calculatePosition(Dimensions parent) {
   dimensions = parent;
+  dimensions.content.y = parent.content.y + parent.content.height;
 };
 void AnonymousBox::calculateChildren() {
   Dimensions lineBox = dimensions;
-  
   int xBound = lineBox.content.x + lineBox.content.width;
   bool first = true;
   for (std::vector<LayoutBox*>::iterator it = children.begin(); it != children.end(); ++it) {

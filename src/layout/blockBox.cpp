@@ -52,9 +52,9 @@ void BlockBox::calculateWidth(Dimensions parent) {
         margin_right = new Length(0.0);
       }
     }
-  }
-
-  int underflow = parent.content.width - total;
+    std::cout << margin_left->toPX() << " " << margin_right->toPX() << '\n';
+  } else {
+    int underflow = parent.content.width - total;
 
   /*Condition 2: If all of the above have a computed value other than 'auto', the values are said 
   to be "over-constrained" and one of the used values will have to be different from its computed 
@@ -108,6 +108,9 @@ void BlockBox::calculateWidth(Dimensions parent) {
       margin_right = new Length(underflow / 2.0);
     }
   }
+  }
+
+  
   
   dimensions.border.left = border_left->toPX();
   dimensions.border.right = border_right->toPX();
@@ -129,13 +132,13 @@ void BlockBox::calculatePosition(Dimensions parent) {
   dimensions.padding.top = node->getPropertyValueOrDefault("padding-top", "padding", zero)->toPX();
   dimensions.padding.bottom = node->getPropertyValueOrDefault("padding-bottom", "padding", zero)->toPX();
   dimensions.content.x = parent.content.x + dimensions.margin.left + dimensions.border.left + dimensions.padding.left;
-  dimensions.content.y = parent.content.y + dimensions.margin.top + dimensions.border.top + dimensions.padding.top;
+  dimensions.content.y = parent.content.height +  parent.content.y + dimensions.margin.top + dimensions.border.top + dimensions.padding.top;
 }
 void BlockBox::calculateChildren() {
   for (std::vector<LayoutBox*>::iterator it = children.begin(); it != children.end(); ++it) {
     LayoutBox* child = (*it);
     child->createLayout(dimensions);
-    dimensions.content.height = dimensions.content.height + child->dimensions.marginBox()->height;
+    dimensions.content.height += child->dimensions.marginBox()->height;
   }
 }
 void BlockBox::calculateHeight() {

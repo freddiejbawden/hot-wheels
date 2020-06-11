@@ -12,6 +12,7 @@ class LayoutBox {
     BoxType box_type;
     StyledNode* node;
     std::vector<LayoutBox*> children;
+    Dimensions* getDimensions();
     void display(int level);
     void displayChildren(int level);
 

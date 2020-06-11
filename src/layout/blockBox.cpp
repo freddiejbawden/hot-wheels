@@ -52,7 +52,6 @@ void BlockBox::calculateWidth(Dimensions parent) {
         margin_right = new Length(0.0);
       }
     }
-    std::cout << margin_left->toPX() << " " << margin_right->toPX() << '\n';
   } else {
     int underflow = parent.content.width - total;
 
@@ -146,5 +145,10 @@ void BlockBox::calculateHeight() {
   Value* height = node->getPropertyValue("height");
   if (height != NULL) {
     dimensions.content.height = height->toPX();
+  } else {
+    for (std::vector<LayoutBox*>::iterator it = children.begin(); it != children.end(); ++it) {
+      LayoutBox* child = (*it);
+    }
   }
+   
 }

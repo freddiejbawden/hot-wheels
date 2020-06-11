@@ -49,6 +49,9 @@ void LayoutBox::displayChildren(int level) {
   }
 }
 
+Dimensions* LayoutBox::getDimensions() {
+  return &dimensions;
+}
 
 LayoutBox* LayoutBox::createAnonymousInlineBox() {
   

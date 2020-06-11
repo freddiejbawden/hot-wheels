@@ -17,7 +17,7 @@ FontManager::FontManager() {
       exit(1);
   }
   std::cout << "Font init complete!\n";
-  fonts.emplace("arial16", TTF_OpenFont("src/layout/fontmanager/Arial.ttf", 16));
+  fonts.emplace("arial16", TTF_OpenFont("src/layout/fontmanager/Arial.ttf", 18));
 
 };
 

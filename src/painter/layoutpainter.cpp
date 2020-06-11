@@ -40,9 +40,9 @@ void LayoutPainter::drawLayoutBox(LayoutBox* layout){
   SDL_Rect r;
   if (layout->node != NULL) {
     Color *c = (Color*) layout->node->getPropertyValue("background-color");
-    if (c == NULL) {
-        SDL_SetRenderDrawColor( renderer, 255,255,255,255);
-    } else {
+    bool background = false;
+    if (c != NULL) {
+      background = true;
       setColor(c);
     }
     if (typeid(*(layout->node->node)) == typeid(Element)) {
@@ -52,7 +52,7 @@ void LayoutPainter::drawLayoutBox(LayoutBox* layout){
       r.y = layout->dimensions.content.y;
       r.w = layout->dimensions.content.width;
       r.h = layout->dimensions.content.height;
-      SDL_RenderFillRect(renderer, &r);
+      if (background) SDL_RenderFillRect(renderer, &r);
     } else if (typeid(*(layout->node->node)) == typeid(Text)) {
       Text* t = (Text*) layout->node->node;
       SDL_Color black = {0, 0, 0}; 

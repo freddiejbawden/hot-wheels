@@ -2,9 +2,8 @@ span {
   background-color: #00ff00ff;
 }
 p {
-  margin-left: 10px; margin-right: 10px;
+  padding: 5px;
 }
 div {
   background-color: #ff0000;
-  width: 200px;
 }

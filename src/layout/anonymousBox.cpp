@@ -8,10 +8,10 @@ void AnonymousBox::displayBoxType() {
 
 AnonymousBox::AnonymousBox() { node = NULL; }
 void AnonymousBox::calculateWidth(Dimensions parent) {
-  dimensions = parent;
+  dimensions.content.width = parent.content.width;
 };
 void AnonymousBox::calculatePosition(Dimensions parent) {
-  dimensions = parent;
+  dimensions.content.x = parent.content.x;
   dimensions.content.y = parent.content.y;
 };
 void AnonymousBox::calculateChildren() {

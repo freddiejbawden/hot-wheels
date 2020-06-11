@@ -137,18 +137,13 @@ void BlockBox::calculateChildren() {
   for (std::vector<LayoutBox*>::iterator it = children.begin(); it != children.end(); ++it) {
     LayoutBox* child = (*it);
     child->createLayout(dimensions);
+    std::cout << child->dimensions.marginBox()->height << " block height\n";
     dimensions.content.height += child->dimensions.marginBox()->height;
   }
 }
 void BlockBox::calculateHeight() {
-  //what if it has text as a child
   Value* height = node->getPropertyValue("height");
   if (height != NULL) {
     dimensions.content.height = height->toPX();
-  } else {
-    for (std::vector<LayoutBox*>::iterator it = children.begin(); it != children.end(); ++it) {
-      LayoutBox* child = (*it);
-    }
   }
-   
 }

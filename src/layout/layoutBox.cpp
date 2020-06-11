@@ -32,7 +32,10 @@ void LayoutBox::display(int level) {
   } 
   displayBoxType();
   Rect content = dimensions.content;
-  std::cout << ", { x:" << content.x << ", y:" << content.y << ", w:" << content.width << ", h:" << content.height << "}]";
+  EdgeSizes padding = dimensions.padding;
+
+  std::cout << ", { x:" << content.x << ", y:" << content.y << ", w:" << content.width << ", h:" << content.height << "}, ";
+  std::cout << ", { t:" << padding.top << ", l:" << padding.left << ", b:" << padding.bottom << ", r:" << padding.right << "}, ";
   displayChildren(level);
 }
 

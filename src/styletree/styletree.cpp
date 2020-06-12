@@ -86,10 +86,25 @@ Value* StyledNode::getPropertyValue(std::string property) {
   return properties[property];
 }
 
+DisplayType StyledNode::getDefaultDisplayType() {
+  // switch to an external list
+  if (typeid(*node) == typeid(Element)) {
+    Element *elm = (Element*) node;
+    std::string tag = elm->tag_name;
+    if (tag == "span") {
+      return DisplayType::Inline;
+    }
+  }
+  return DisplayType::Block;
+}
+
 DisplayType StyledNode::getDisplayType() {
+  if (typeid(*node) == typeid(Text)) {
+    return DisplayType::Inline;
+  }
   Value* value = getPropertyValue("display");
   if (value == NULL) {
-    return DisplayType::Block;
+    return getDefaultDisplayType();
   }
   Keyword *keywordValue = (Keyword*) value;
   if (keywordValue->value == "block") {
@@ -104,7 +119,9 @@ DisplayType StyledNode::getDisplayType() {
 StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules) {
   node = domNodeRoot;
 
-  if (typeid(*domNodeRoot) == typeid(Text)) return;
+  if (typeid(*domNodeRoot) == typeid(Text)) {
+    return;
+  };
   
   properties = std::unordered_map<std::string, Value*>();
   Element*  elm = (Element*) node;

@@ -20,12 +20,12 @@ Length::Length(std::string str_value) {
   unit = Unit::px;
 }
 
-Length::Length(float v) {
+Length::Length(int v) {
   value = v;
   unit = Unit::px;
 }
 
-float Length::toPX() {
+int Length::toPX() {
   if (unit == Unit::px) {
     return value;
   } else {

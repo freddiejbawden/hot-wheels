@@ -1,7 +1,9 @@
 #include "layoutpainter.hpp"
 #include "../domnodes/element.hpp"
+#include "../domnodes/text.hpp"
+#include <SDL2/SDL_ttf.h>
 #include "../css/cssnodes/values/color.hpp"
-
+#include "../layout/fontmanager/fontmanager.hpp"
 #include <cstdlib>
 LayoutPainter::LayoutPainter(LayoutBox* l, Dimensions viewport) {
   layout = l;
@@ -36,25 +38,43 @@ void LayoutPainter::setColor(Color* c) {
 
 void LayoutPainter::drawLayoutBox(LayoutBox* layout){
   SDL_Rect r;
-  Color *c = (Color*) layout->node->getPropertyValue("background-color");
-  if (c == NULL) {
-      SDL_SetRenderDrawColor( renderer, 255,255,255,255);
-  } else {
-    setColor(c);
-  }
-  Element* elm = (Element*) layout->node->node;
-  r.x = layout->dimensions.content.x;
-  r.y = layout->dimensions.content.y;
-  r.w = layout->dimensions.content.width;
-  r.h = layout->dimensions.content.height;
-  SDL_RenderFillRect(renderer, &r);
+  if (layout->node != NULL) {
+    Color *c = (Color*) layout->node->getPropertyValue("background-color");
+    bool background = false;
+    if (c != NULL) {
+      background = true;
+      setColor(c);
+    }
+    if (typeid(*(layout->node->node)) == typeid(Element)) {
+      Element* elm = (Element*) layout->node->node;
+      std::cout << "painting " << elm->tag_name << "\n";
+      r.x = layout->dimensions.content.x;
+      r.y = layout->dimensions.content.y;
+      r.w = layout->dimensions.content.width;
+      r.h = layout->dimensions.content.height;
+      if (background) SDL_RenderFillRect(renderer, &r);
+    } else if (typeid(*(layout->node->node)) == typeid(Text)) {
+      Text* t = (Text*) layout->node->node;
+      SDL_Color black = {0, 0, 0}; 
+      FontManager* fm = FontManager::getInstance();
+      SDL_Surface* textSurface = TTF_RenderText_Solid(fm->getFont("arial16"), t->text.c_str(), black);
+      SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface); 
+      r.x = layout->dimensions.content.x;
+      r.y = layout->dimensions.content.y;
+      r.w = layout->dimensions.content.width;
+      r.h = layout->dimensions.content.height;
+      SDL_RenderCopy(renderer, textTexture, NULL, &r);
+    }
+  
+  } 
+  
   for (std::vector<LayoutBox*>::iterator it = layout->children.begin(); it != layout->children.end(); ++it) {
     drawLayoutBox(*it);
   }
 }
 
 void LayoutPainter::hold() {
-    SDL_RenderPresent(renderer);
+  SDL_RenderPresent(renderer);
 
   SDL_Event e;
   bool quit = false;

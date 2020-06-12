@@ -5,7 +5,7 @@ void Keyword::display() {
   std::cout << value;
 }
 
-float Keyword::toPX() {
+int Keyword::toPX() {
   if (value == "auto") {
     return 0;
   } else {

@@ -5,7 +5,6 @@ Value::~Value() {}
 void Value::display() {
   
 }
-float Value::toPX() {
-  std::cout << "val\n";
+int Value::toPX() {
   return 0;
 }

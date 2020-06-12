@@ -1,19 +1,9 @@
+span {
+  background-color: #00ff00ff;
+}
+p {
+  padding: 5px;
+}
 div {
-  margin: 10px;
+  background-color: #ff0000;
 }
-#a {
-  background-color: #ff0000ff;
-}
-#b {
-  background-color: #ff8030ff;
-}
-#c {
-  background-color: #fff830ff;
-}
-#d {
-  background-color: #25c237ff;
-}
-#e {
-  background-color: #1325adff;
-}
-

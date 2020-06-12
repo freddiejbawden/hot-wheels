@@ -13,7 +13,7 @@ This is extremely stripped back, things like JS are a whole other thing which is
 - [x] Paint to a window
 
 **Milestone 2**
-- [ ] Draw Inline Boxes
+- [x] Draw Inline Boxes
 - [ ] Render text in boxes
 - [ ] Link tags
 - [ ] Style tags
@@ -30,6 +30,24 @@ Syntax can contain
 We have paint! We can paint colored rectangles!!!
 
 <img src="docs/rainbowdiv.png" width="300" alt="Rainbow colored divs" >
+
+We can also draw text! Taking the HTML and CSS:
+```html
+<!doctype html>
+<html>
+  <p>Hello <span>world</span></p>
+  <p>It's working</p>
+  <p>IT'S WORKING!</p>
+
+</html>
+```
+```css
+span {
+  background-color: #00ff00ff;
+}
+```
+we produce: 
+<img src="docs/itsworking.png" alt="Screenshot of text being rendered">
 
 ## How does a browser engine work? 
 

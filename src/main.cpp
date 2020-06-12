@@ -5,8 +5,9 @@
 #include "css/cssparser/parser.hpp"
 #include "domnodes/element.hpp"
 #include "styletree/styletree.hpp"
-#include "layout/layoutBox.hpp"
+#include "layout/blockBox.hpp"
 #include "painter/layoutpainter.hpp"
+#include "layout/fontmanager/fontmanager.hpp"
 
 int main() {
   std::cout << "Hot wheels\n";
@@ -23,13 +24,14 @@ int main() {
   StyledNode* rootStyledNode = new StyledNode(root, rules);
   std::cout << "style tree compiled\n";
   rootStyledNode->display(0);
-  LayoutBox* layoutBox = new LayoutBox(rootStyledNode);
+  LayoutBox* layoutBox = new BlockBox(rootStyledNode);
   std::cout << "Layout boxes computed\n";
   Dimensions viewport = Dimensions();
   viewport.content = Rect();
   viewport.content.width = 500;
-  viewport.content.height = 500;
+  viewport.content.height = 0;
   layoutBox->createLayout(viewport);
+  layoutBox->display(0);
   LayoutPainter* painter = new LayoutPainter(layoutBox, viewport);
   painter->drawLayoutBox(layoutBox);
   painter->hold();

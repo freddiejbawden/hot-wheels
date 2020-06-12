@@ -13,7 +13,7 @@ This is extremely stripped back, things like JS are a whole other thing which is
 - [x] Paint to a window
 
 **Milestone 2**
-- [ ] Draw Inline Boxes
+- [x] Draw Inline Boxes
 - [ ] Render text in boxes
 - [ ] Link tags
 - [ ] Style tags

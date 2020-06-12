@@ -1,4 +1,4 @@
-#include "node.hpp"
+#include "domnodes/node.hpp"
 
 void Node::addChild(Node *n) {
   children.push_back(n);

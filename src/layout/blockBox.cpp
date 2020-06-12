@@ -1,9 +1,9 @@
 #include <algorithm>
 
 
-#include "blockBox.hpp"
-#include "../css/cssnodes/values/length.hpp"
-#include "../css/cssnodes/values/keyword.hpp"
+#include "layout/blockBox.hpp"
+#include "cssnodes/values/length.hpp"
+#include "cssnodes/values/keyword.hpp"
 BlockBox::BlockBox(StyledNode* node) : LayoutBox(node) {};
 
 void BlockBox::displayBoxType() {

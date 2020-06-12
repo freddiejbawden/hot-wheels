@@ -1,9 +1,9 @@
 
-#include "inlineBox.hpp"
+#include "layout/inlineBox.hpp"
 
-#include "../domnodes/text.hpp"
-#include "../domnodes/element.hpp"
-#include "../css/cssnodes/values/keyword.hpp"
+#include "domnodes/text.hpp"
+#include "domnodes/element.hpp"
+#include "cssnodes/values/keyword.hpp"
 #include "fontmanager/fontmanager.hpp"
 
 InlineBox::InlineBox(StyledNode* node) : LayoutBox(node) {};

@@ -1,22 +1,15 @@
 #include <iostream>
-#include "domnodes/text.hpp"
-#include "preprocessor/preprocessor.hpp"
-#include "htmlparser/parser.hpp"
-#include "css/cssparser/parser.hpp"
-#include "domnodes/element.hpp"
-#include "styletree/styletree.hpp"
-#include "layout/blockBox.hpp"
-#include "painter/layoutpainter.hpp"
-#include "layout/fontmanager/fontmanager.hpp"
+#include <preprocessor/preprocessor.hpp>
+
 
 int main() {
   std::cout << "Hot wheels\n";
   std::string htmldata = Preprocessor::loadFile("test.html");
-  HTMLParser htmlParser = HTMLParser();
+  /* HTMLParser htmlParser = HTMLParser();
   Node* root = htmlParser.parse(htmldata);
-  std::cout << "test.html parsed\n";
+  std::cout << "test.html parsed\n"; */
   
-  std::string css_data = Preprocessor::loadFile("test.css");
+  /* std::string css_data = Preprocessor::loadFile("test.css");
   CSSParser cssParser = CSSParser();
   std::vector<Rule*> rules = cssParser.parse(css_data);
   std::cout << "test.css parsed\n";
@@ -35,5 +28,5 @@ int main() {
   LayoutPainter* painter = new LayoutPainter(layoutBox, viewport);
   painter->drawLayoutBox(layoutBox);
   painter->hold();
-
+ */
 }

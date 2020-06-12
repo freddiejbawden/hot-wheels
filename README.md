@@ -6,11 +6,12 @@ This is extremely stripped back, things like JS are a whole other thing which is
 
 # Building
 
-```
+```bash
 mkdir build
 cd build 
 cmake ..
 make 
+./app/hotwheels
 ```
 
 # Running

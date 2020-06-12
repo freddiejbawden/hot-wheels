@@ -1,4 +1,4 @@
-#include "text.hpp"
+#include "domnodes/text.hpp"
 
 void Text::display(int level) {
   std::cout << "\"" << text << "\"";

@@ -1,14 +1,14 @@
 #include <algorithm>
 
-#include "layoutBox.hpp"
-#include "boxType.hpp"
-#include "../domnodes/element.hpp"
-#include "../domnodes/text.hpp"
-#include "../css/cssnodes/values/length.hpp"
-#include "../css/cssnodes/values/keyword.hpp"
-#include "blockBox.hpp"
-#include "inlineBox.hpp"
-#include "anonymousBox.hpp"
+#include "layout/layoutBox.hpp"
+#include "layout/boxType.hpp"
+#include "domnodes/element.hpp"
+#include "domnodes/text.hpp"
+#include "cssnodes/values/length.hpp"
+#include "cssnodes/values/keyword.hpp"
+#include "layout/blockBox.hpp"
+#include "layout/inlineBox.hpp"
+#include "layout/anonymousBox.hpp"
 
 void LayoutBox::displayBoxType() {
   std::cout << "box: layoutbox ";

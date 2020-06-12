@@ -1,5 +1,5 @@
 
-#include "lineBox.hpp"
+#include "layout/lineBox.hpp"
 #include <iostream>
 
 void LineBox::displayBoxType() {

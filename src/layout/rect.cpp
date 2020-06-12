@@ -1,4 +1,4 @@
-#include "rect.hpp"
+#include "layout/rect.hpp"
 
 Rect* Rect::expandedBy(EdgeSizes edge) {
   Rect* toReturn = new Rect();

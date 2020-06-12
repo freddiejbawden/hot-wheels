@@ -1,9 +1,9 @@
 #include <iostream>
-#include "styletree.hpp"
-#include "../domnodes/text.hpp"
-#include "../domnodes/element.hpp"
-#include "../css/cssnodes/values/keyword.hpp"
-#include "../css/cssnodes/values/length.hpp"
+#include "styletree/styletree.hpp"
+#include "domnodes/text.hpp"
+#include "domnodes/element.hpp"
+#include "cssnodes/values/keyword.hpp"
+#include "cssnodes/values/length.hpp"
 
 void StyledNode::display(int level) {
   if (typeid(*node) == typeid(Element)) {

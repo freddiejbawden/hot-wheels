@@ -13,6 +13,13 @@ cmake ..
 make 
 ```
 
+# Running
+
+From project root
+```
+./build/app/hotwheels
+```
+
 **Goals** 
 
 **Milestone 1**

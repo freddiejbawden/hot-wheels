@@ -11,15 +11,13 @@ mkdir build
 cd build 
 cmake ..
 make 
-cd ..
-./build/app/hotwheels
 ```
 
 # Running
 
-From project root
+From project root, run
 ```
-./build/app/hotwheels
+./hotwheels
 ```
 
 **Goals** 

@@ -7,6 +7,7 @@
 
 class FontManager {
   public:
+    static int DEFAULT_TEXTSIZE;
     static FontManager* getInstance();
     int getWidthOfText(std::string font,int size, std::string text);
     int getHeightOfText(std::string font, int size, std::string text);

@@ -35,7 +35,6 @@ void InlineBox::calculateWidth(Dimensions parent) {
     FontManager *fm  = FontManager::getInstance();
 
     Value* fontsize = node->getPropertyValue("font-size");
-    std:: cout << "fonts\n";
     int w = fm->getWidthOfText("arial",node->parent->getPropertyValue("font-size")->toPX(), t->text);
     dimensions.content.width = w;
 

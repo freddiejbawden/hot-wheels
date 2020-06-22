@@ -89,7 +89,6 @@ void BlockBox::calculateWidth(Dimensions parent) {
     /* Condition 4: If 'width' is set to 'auto', any other 'auto' values become '0' and 'width' 
       follows from the resulting equality. */
     if (width == autoWidth) {
-      std::cout << "auto\n";
       // width is the first element
       for (std::vector<Value*>::iterator it = widths.begin() + 1; it != widths.end(); ++it) {
         if (*it == autoWidth) {

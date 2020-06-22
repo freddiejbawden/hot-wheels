@@ -6,6 +6,7 @@
 #include "fontmanager/fontmanager.hpp"
 
 FontManager* FontManager::instance = 0;
+int FontManager::DEFAULT_TEXTSIZE = 16;
 FontManager* FontManager::getInstance() {
   if (instance == 0)
   {

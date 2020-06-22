@@ -115,15 +115,26 @@ DisplayType StyledNode::getDisplayType() {
     return DisplayType::Inline;
   }
 }
+
+void StyledNode::setDefaults() {
+  // make the defaults a static class
+  properties["font-size"] = new Length(16);
+}
 // This whole thing needs tidied, bad polymorphism i think
-StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules) {
+StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules, StyledNode* _parent) {
   node = domNodeRoot;
+  parent = _parent;
 
   if (typeid(*domNodeRoot) == typeid(Text)) {
     return;
   };
-  
   properties = std::unordered_map<std::string, Value*>();
+  setDefaults();
+  if (parent != nullptr) {
+    // some properties are inherited, like font-size - we should make a const with all of them and 
+    // loop through? 
+    properties["font-size"] = parent->getPropertyValueOrDefault("font-size", new Length(16));
+  }
   Element*  elm = (Element*) node;
   // check for widtth and height attributes and add to styling
   if (elm->getAttribute("width") != "") {
@@ -134,14 +145,19 @@ StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules) {
     std::string attrWidth = elm->getAttribute("height");
     properties["height"] = new Length(attrWidth);
   }
+  
+  // inherit from parent
+  
+
   children = std::vector<StyledNode*>();
   match(styleRules);
  
   // recurse to children
   for (std::vector<Node*>::iterator it = domNodeRoot->children.begin(); it != domNodeRoot->children.end(); ++it) {
-    children.push_back(new StyledNode(*it, styleRules));
+    children.push_back(new StyledNode(*it, styleRules, this));
   }
 }    
+StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules) : StyledNode(domNodeRoot, styleRules, nullptr) {};
 
 void StyledNode::attatchDeclarations(std::vector<Declaration> d) {
   for (std::vector<Declaration>::iterator it = d.begin(); it != d.end(); ++it) {

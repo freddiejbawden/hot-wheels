@@ -55,58 +55,59 @@ void BlockBox::calculateWidth(Dimensions parent) {
   } else {
     int underflow = parent.content.width - total;
 
-  /*Condition 2: If all of the above have a computed value other than 'auto', the values are said 
-  to be "over-constrained" and one of the used values will have to be different from its computed 
-  value. If the 'direction' property of the containing block has the value 'ltr', the specified 
-  value of 'margin-right' is ignored and the value is calculated so as to make the equality true. 
-  If the value of 'direction' is 'rtl', this happens to 'margin-left' instead. */
-  bool isOverconstrained = std::all_of(widths.begin(), widths.end(), [autoWidth](Value* v){return v == autoWidth; });
-  if (isOverconstrained && total > parent.content.width) {
-    if (((Keyword*) node->getPropertyValue("direction"))->value == "rtl") {
-      margin_left = new Length(underflow);
-    } else {
-      margin_right = new Length(underflow);
-    }
-  }
-
-  /*Condition 3: If there is exactly one value specified as 'auto', its used value follows from the 
-    equality */ 
-  Value* single = NULL;
-  for (std::vector<Value*>::iterator it = widths.begin(); it != widths.end(); ++it) {
-    if ((*it) == autoWidth) {
-      if (single == NULL) {
-        single = (*it);
+    /*Condition 2: If all of the above have a computed value other than 'auto', the values are said 
+    to be "over-constrained" and one of the used values will have to be different from its computed 
+    value. If the 'direction' property of the containing block has the value 'ltr', the specified 
+    value of 'margin-right' is ignored and the value is calculated so as to make the equality true. 
+    If the value of 'direction' is 'rtl', this happens to 'margin-left' instead. */
+    bool isOverconstrained = std::all_of(widths.begin(), widths.end(), [autoWidth](Value* v){return v == autoWidth; });
+    if (isOverconstrained && total > parent.content.width) {
+      if (((Keyword*) node->getPropertyValue("direction"))->value == "rtl") {
+        margin_left = new Length(underflow);
       } else {
-        single = NULL;
-        break;
+        margin_right = new Length(underflow);
       }
     }
-  }
-  if (single != NULL) {
-    single = new Length(underflow);
-  }
 
-  /* Condition 4: If 'width' is set to 'auto', any other 'auto' values become '0' and 'width' 
-    follows from the resulting equality. */
-  if (width == autoWidth) {
-    // width is the first element
-    for (std::vector<Value*>::iterator it = widths.begin() + 1; it != widths.end(); ++it) {
-      if (*it == autoWidth) {
-        (*it) = new Length(0.0);
+    /*Condition 3: If there is exactly one value specified as 'auto', its used value follows from the 
+      equality */ 
+    Value* single = NULL;
+    for (std::vector<Value*>::iterator it = widths.begin(); it != widths.end(); ++it) {
+      if ((*it) == autoWidth) {
+        if (single == NULL) {
+          single = (*it);
+        } else {
+          single = NULL;
+          break;
+        }
       }
     }
-    if (underflow >= 0.0) {
-      width = new Length(underflow);
+    if (single != NULL) {
+      single = new Length(underflow);
+    }
+
+    /* Condition 4: If 'width' is set to 'auto', any other 'auto' values become '0' and 'width' 
+      follows from the resulting equality. */
+    if (width == autoWidth) {
+      std::cout << "auto\n";
+      // width is the first element
+      for (std::vector<Value*>::iterator it = widths.begin() + 1; it != widths.end(); ++it) {
+        if (*it == autoWidth) {
+          (*it) = new Length(0.0);
+        }
+      }
+      if (underflow >= 0.0) {
+        width = new Length(underflow);
+      } else {
+        width = new Length(0.0);
+        margin_right = new Length(margin_right->toPX() + underflow);
+      }
     } else {
-      width = new Length(0.0);
-      margin_right = new Length(margin_right->toPX() + underflow);
+      if (margin_left == autoWidth && margin_right == autoWidth) {
+        margin_left = new Length(underflow / 2.0);
+        margin_right = new Length(underflow / 2.0);
+      }
     }
-  } else {
-    if (margin_left == autoWidth && margin_right == autoWidth) {
-      margin_left = new Length(underflow / 2.0);
-      margin_right = new Length(underflow / 2.0);
-    }
-  }
   }
 
   
@@ -118,6 +119,7 @@ void BlockBox::calculateWidth(Dimensions parent) {
   dimensions.padding.left = padding_left->toPX();
   dimensions.padding.right = padding_right->toPX();
   dimensions.content.width = width->toPX();
+
 }
 
 void BlockBox::calculatePosition(Dimensions parent) {

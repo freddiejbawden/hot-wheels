@@ -105,10 +105,12 @@ void LayoutBox::calculateHeight() {
 }
 
 void LayoutBox::createLayout(Dimensions d) {
+  std::cout << "create\n";
   calculateWidth(d);
   calculatePosition(d);
   calculateChildren();
-  calculateHeight();
+  calculateHeight();  
+
 }
 
 

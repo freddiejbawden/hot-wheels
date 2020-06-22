@@ -15,7 +15,11 @@ class StyledNode {
     Node* node;
     std::unordered_map<std::string, Value*> properties;
     std::vector<StyledNode*> children;
+    StyledNode* parent;
     StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules);
+
+    StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules, StyledNode* parent);
+
     void match(std::vector<Rule*> styleRules);
     bool matchSimpleSelector(SimpleSelector* s);
     void attatchDeclarations(std::vector<Declaration> d);
@@ -26,6 +30,8 @@ class StyledNode {
     Value* getPropertyValueOrDefault(std::string property1,std::string property2, Value* d);
     DisplayType getDefaultDisplayType();
     DisplayType getDisplayType();
+  private:
+    void setDefaults();
 };
 
 #endif

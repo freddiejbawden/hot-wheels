@@ -26,12 +26,12 @@ int main() {
   rootStyledNode->display(0);
   
   LayoutBox* layoutBox = new BlockBox(rootStyledNode);
-  std::cout << "Layout boxes computed\n";
   Dimensions viewport = Dimensions();
   viewport.content = Rect();
   viewport.content.width = 500;
   viewport.content.height = 0;
   layoutBox->createLayout(viewport);
+  std::cout << "Layout boxes computed\n";
   layoutBox->display(0);
   
   LayoutPainter* painter = new LayoutPainter(layoutBox, viewport);

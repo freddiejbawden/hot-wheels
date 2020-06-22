@@ -8,9 +8,9 @@
 class FontManager {
   public:
     static FontManager* getInstance();
-    int getWidthOfText(std::string font, std::string text);
-    int getHeightOfText(std::string font, std::string text);
-    TTF_Font* getFont(std::string font);
+    int getWidthOfText(std::string font,int size, std::string text);
+    int getHeightOfText(std::string font, int size, std::string text);
+    TTF_Font* getFont(std::string font, int size);
   private:
     static FontManager* instance;
     FontManager();

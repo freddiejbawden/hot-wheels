@@ -4,6 +4,7 @@
 #include "domnodes/element.hpp"
 #include "cssnodes/values/keyword.hpp"
 #include "cssnodes/values/length.hpp"
+#include "fontmanager/fontmanager.hpp"
 
 void StyledNode::display(int level) {
   if (typeid(*node) == typeid(Element)) {
@@ -115,15 +116,44 @@ DisplayType StyledNode::getDisplayType() {
     return DisplayType::Inline;
   }
 }
+
+void StyledNode::setDefaults() {
+  // make the defaults a static class
+  if (typeid(*node) == typeid(Element)) {
+    Element* e = (Element*) node;
+    // this gets a hmm, probably a better way to do this
+    if (e->tag_name == "h1") {
+      properties["font-size"] = new Length(FontManager::DEFAULT_TEXTSIZE * 2);
+    } else if (e->tag_name == "h2") {
+      properties["font-size"] = new Length(FontManager::DEFAULT_TEXTSIZE * 1.5);
+    } else if (e->tag_name == "h3") {
+      properties["font-size"] = new Length(FontManager::DEFAULT_TEXTSIZE * 1.17);
+    } else if (e->tag_name == "h4") {
+      properties["font-size"] = new Length(FontManager::DEFAULT_TEXTSIZE * 1);
+    } else if (e->tag_name == "h5") {
+      properties["font-size"] = new Length(FontManager::DEFAULT_TEXTSIZE * 0.83);
+    } else if (e->tag_name == "h6") {
+      properties["font-size"] = new Length(FontManager::DEFAULT_TEXTSIZE * 0.67);
+    } else {
+      properties["font-size"] = new Length(FontManager::DEFAULT_TEXTSIZE);
+    }
+  }
+}
 // This whole thing needs tidied, bad polymorphism i think
-StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules) {
+StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules, StyledNode* _parent) {
   node = domNodeRoot;
+  parent = _parent;
 
   if (typeid(*domNodeRoot) == typeid(Text)) {
     return;
   };
-  
   properties = std::unordered_map<std::string, Value*>();
+  if (parent != nullptr) {
+    // some properties are inherited, like font-size - we should make a const with all of them and 
+    // loop through? 
+    properties["font-size"] = parent->getPropertyValueOrDefault("font-size", new Length(16));
+  }
+  setDefaults();
   Element*  elm = (Element*) node;
   // check for widtth and height attributes and add to styling
   if (elm->getAttribute("width") != "") {
@@ -134,14 +164,16 @@ StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules) {
     std::string attrWidth = elm->getAttribute("height");
     properties["height"] = new Length(attrWidth);
   }
+  
   children = std::vector<StyledNode*>();
   match(styleRules);
  
   // recurse to children
   for (std::vector<Node*>::iterator it = domNodeRoot->children.begin(); it != domNodeRoot->children.end(); ++it) {
-    children.push_back(new StyledNode(*it, styleRules));
+    children.push_back(new StyledNode(*it, styleRules, this));
   }
 }    
+StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules) : StyledNode(domNodeRoot, styleRules, nullptr) {};
 
 void StyledNode::attatchDeclarations(std::vector<Declaration> d) {
   for (std::vector<Declaration>::iterator it = d.begin(); it != d.end(); ++it) {

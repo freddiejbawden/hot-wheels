@@ -108,7 +108,8 @@ void LayoutBox::createLayout(Dimensions d) {
   calculateWidth(d);
   calculatePosition(d);
   calculateChildren();
-  calculateHeight();
+  calculateHeight();  
+
 }
 
 

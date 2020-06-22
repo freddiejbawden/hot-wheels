@@ -47,7 +47,6 @@ void LayoutPainter::drawLayoutBox(LayoutBox* layout){
     }
     if (typeid(*(layout->node->node)) == typeid(Element)) {
       Element* elm = (Element*) layout->node->node;
-      std::cout << "painting " << elm->tag_name << "\n";
       r.x = layout->dimensions.content.x;
       r.y = layout->dimensions.content.y;
       r.w = layout->dimensions.content.width;
@@ -57,7 +56,8 @@ void LayoutPainter::drawLayoutBox(LayoutBox* layout){
       Text* t = (Text*) layout->node->node;
       SDL_Color black = {0, 0, 0}; 
       FontManager* fm = FontManager::getInstance();
-      SDL_Surface* textSurface = TTF_RenderText_Solid(fm->getFont("arial16"), t->text.c_str(), black);
+      int fontsize = layout->node->parent->getPropertyValue("font-size")->toPX();
+      SDL_Surface* textSurface = TTF_RenderText_Solid(fm->getFont("arial", fontsize), t->text.c_str(), black);
       SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface); 
       r.x = layout->dimensions.content.x;
       r.y = layout->dimensions.content.y;

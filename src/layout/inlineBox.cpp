@@ -33,7 +33,9 @@ void InlineBox::calculateWidth(Dimensions parent) {
   if (typeid(*(node->node)) == typeid(Text)) {
     Text* t = (Text*) node->node;
     FontManager *fm  = FontManager::getInstance();
-    int w = fm->getWidthOfText("arial16", t->text);
+
+    Value* fontsize = node->getPropertyValue("font-size");
+    int w = fm->getWidthOfText("arial",node->parent->getPropertyValue("font-size")->toPX(), t->text);
     dimensions.content.width = w;
 
   } else {
@@ -55,7 +57,6 @@ void InlineBox::calculateChildren() {
   }
   // Inline Elements shrink to fit children
   if (typeid(*(node->node)) == typeid(Element)) {
-    std::cout << ((Element*) node->node)->tag_name << ": " << sum << "px\n";
     dimensions.content.width = sum;
   }
 };
@@ -63,7 +64,7 @@ void InlineBox::calculateHeight() {
     if (typeid(*(node->node)) == typeid(Text)) {
       Text* t = (Text*) node->node;
       FontManager *fm  = FontManager::getInstance();
-      int h = fm->getHeightOfText("arial16", t->text);
+      int h = fm->getHeightOfText("arial",node->parent->getPropertyValue("font-size")->toPX(), t->text);
       dimensions.content.height = h;
     } else {
       int maxHeight = 0;

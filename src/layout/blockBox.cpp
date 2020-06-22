@@ -138,7 +138,6 @@ void BlockBox::calculateChildren() {
   for (std::vector<LayoutBox*>::iterator it = children.begin(); it != children.end(); ++it) {
     LayoutBox* child = (*it);
     child->createLayout(dimensions);
-    std::cout << child->dimensions.marginBox()->height << " block height\n";
     dimensions.content.height += child->dimensions.marginBox()->height;
   }
 }

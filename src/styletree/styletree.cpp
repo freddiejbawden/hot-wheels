@@ -122,7 +122,6 @@ void StyledNode::setDefaults() {
   if (typeid(*node) == typeid(Element)) {
     Element* e = (Element*) node;
     // this gets a hmm, probably a better way to do this
-    std::cout << e->tag_name << '\n';
     if (e->tag_name == "h1") {
       properties["font-size"] = new Length(FontManager::DEFAULT_TEXTSIZE * 2);
     } else if (e->tag_name == "h2") {

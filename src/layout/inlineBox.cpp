@@ -57,7 +57,6 @@ void InlineBox::calculateChildren() {
   }
   // Inline Elements shrink to fit children
   if (typeid(*(node->node)) == typeid(Element)) {
-    std::cout << ((Element*) node->node)->tag_name << ": " << sum << "px\n";
     dimensions.content.width = sum;
   }
 };

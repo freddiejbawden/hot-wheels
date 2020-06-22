@@ -34,10 +34,9 @@ void AnonymousBox::calculateChildren() {
       // doing this twice is ineffcient, we will probably need to 
       // make createLayout(..) an interface 
       child->createLayout(lineBox);
-    } else {
-      // there is space to spare
-      lineBox.content.x += childDims.content.width;
+
     }
+    lineBox.content.x += childDims.content.width;
     if (wrapped) {
       dimensions.content.height += childDims.content.height;
       wrapped = false;

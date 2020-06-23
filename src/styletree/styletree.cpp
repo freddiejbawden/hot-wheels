@@ -41,7 +41,11 @@ void StyledNode::display(int level) {
     }
   } else if (typeid(*node) == typeid(Text)) {
     Text *t = (Text*) node;
-    std::cout << '"' << t->text << '"';
+    if (t->text.length() > 40) {
+      std::cout << '"' << t->text.substr(0,40) << "...\"";
+    } else {
+      std::cout << '"' << t->text << '"';
+    }
   }
   displayChildren(level);
 }

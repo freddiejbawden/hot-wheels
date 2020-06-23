@@ -1,10 +1,9 @@
-
 #include "layout/inlineBox.hpp"
-
 #include "domnodes/text.hpp"
 #include "domnodes/element.hpp"
 #include "cssnodes/values/keyword.hpp"
 #include "fontmanager/fontmanager.hpp"
+#include "utils/utils.hpp"
 
 InlineBox::InlineBox(StyledNode* node) : LayoutBox(node) {};
 
@@ -36,7 +35,11 @@ void InlineBox::calculateWidth(Dimensions parent) {
 
     Value* fontsize = node->getPropertyValue("font-size");
     int w = fm->getWidthOfText("arial",node->parent->getPropertyValue("font-size")->toPX(), t->text);
-    dimensions.content.width = w;
+    if (w > parent.content.width) {
+      dimensions.content.width = parent.content.width;
+    } else {
+      dimensions.content.width = w;
+    }
 
   } else {
     // else fill all available space
@@ -64,7 +67,28 @@ void InlineBox::calculateHeight() {
     if (typeid(*(node->node)) == typeid(Text)) {
       Text* t = (Text*) node->node;
       FontManager *fm  = FontManager::getInstance();
-      int h = fm->getHeightOfText("arial",node->parent->getPropertyValue("font-size")->toPX(), t->text);
+      int fontsize = node->parent->getPropertyValue("font-size")->toPX();
+      
+      std::vector<std::string> out;
+      size_t pos = 0;
+      // make this a util function
+      std::string token;
+      std::string text = t->text;
+      utils::splitString(text, &out);    
+      int currentWidth = 0;
+      
+      int h = 0;
+      for (std::vector<std::string>::iterator it = out.begin(); it != out.end(); ++it) {
+        std::string s = *it;
+        int wordWidth = fm->getWidthOfText("arial", fontsize, s);
+        if (currentWidth + wordWidth > dimensions.content.width) {
+          h += fm->getHeightOfText("arial", fontsize, t->text);
+          currentWidth = wordWidth;
+        } else {
+          currentWidth += wordWidth;
+        }
+      };
+      h += fm->getHeightOfText("arial", fontsize, t->text);
       dimensions.content.height = h;
     } else {
       int maxHeight = 0;

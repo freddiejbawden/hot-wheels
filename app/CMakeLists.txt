@@ -17,5 +17,6 @@ target_link_libraries(hotwheels
   fontmanager_lib
   layout_lib
   layoutpainter_lib
+  utils_lib
   )
   

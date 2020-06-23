@@ -1,10 +1,13 @@
+
+#include <SDL_ttf.h>
+
 #include "layoutpainter/layoutpainter.hpp"
 #include "domnodes/element.hpp"
 #include "domnodes/text.hpp"
-#include <SDL_ttf.h>
 #include "cssnodes/values/color.hpp"
 #include "fontmanager/fontmanager.hpp"
-#include <cstdlib>
+#include "utils/utils.hpp"
+
 LayoutPainter::LayoutPainter(LayoutBox* l, Dimensions viewport) {
   layout = l;
   if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -35,6 +38,32 @@ void LayoutPainter::setColor(Color* c) {
   SDL_SetRenderDrawColor(renderer, c->r, c->g, c->b, c->a);
 }
 
+void splitIntoLines(std::string text, int fontsize, Dimensions container, std::vector<std::string>* lines) {
+  int currentWidth = 0;
+
+  std::vector<std::string> out;
+  size_t pos = 0;
+  
+  FontManager* fm = FontManager::getInstance();
+  std::string currentLine = "";
+  bool endofline = false;
+  utils::splitString(text, &out);
+  std::string token;
+  for (std::vector<std::string>::iterator it = out.begin(); it != out.end(); ++it) {
+    token = (*it);
+    int wordWidth = fm->getWidthOfText("arial", fontsize, token);
+    if (currentWidth + wordWidth > container.content.width) {
+      lines->push_back(currentLine);
+      currentLine = token;
+      currentWidth = wordWidth;
+    } else {
+      currentLine += token;
+      currentWidth += wordWidth;
+    } 
+  }
+  lines->push_back(currentLine);
+}
+
 
 void LayoutPainter::drawLayoutBox(LayoutBox* layout){
   SDL_Rect r;
@@ -57,13 +86,22 @@ void LayoutPainter::drawLayoutBox(LayoutBox* layout){
       SDL_Color black = {0, 0, 0}; 
       FontManager* fm = FontManager::getInstance();
       int fontsize = layout->node->parent->getPropertyValue("font-size")->toPX();
-      SDL_Surface* textSurface = TTF_RenderText_Solid(fm->getFont("arial", fontsize), t->text.c_str(), black);
-      SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface); 
-      r.x = layout->dimensions.content.x;
-      r.y = layout->dimensions.content.y;
-      r.w = layout->dimensions.content.width;
-      r.h = layout->dimensions.content.height;
-      SDL_RenderCopy(renderer, textTexture, NULL, &r);
+      std::vector<std::string> lines;
+      splitIntoLines(t->text, fontsize, layout->dimensions, &lines);
+      int y = layout->dimensions.content.y;
+      for (std::vector<std::string>::iterator it = lines.begin(); it != lines.end(); ++it) {
+        const char* content = (*it).c_str();
+        SDL_Surface* textSurface = TTF_RenderText_Solid(fm->getFont("arial", fontsize), content, black);
+        SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface); 
+        r.x = layout->dimensions.content.x;
+        r.y = y;
+        r.w = fm->getWidthOfText("arial", fontsize, content);
+        r.h = fm->getHeightOfText("arial", fontsize, content);
+        SDL_RenderCopy(renderer, textTexture, NULL, &r);
+        y += fm->getHeightOfText("arial", fontsize, content);
+      };
+      
+     
     }
   
   } 

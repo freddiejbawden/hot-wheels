@@ -6,8 +6,6 @@ set(HEADER_LIST
   "${HotWheels_SOURCE_DIR}/include/layout/layoutBox.hpp"
   "${HotWheels_SOURCE_DIR}/include/layout/lineBox.hpp"
   "${HotWheels_SOURCE_DIR}/include/layout/rect.hpp"
-
-
 )
 
 add_library(layout_lib 

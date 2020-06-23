@@ -6,6 +6,7 @@
 #include "domnodes/text.hpp"
 #include "cssnodes/values/color.hpp"
 #include "fontmanager/fontmanager.hpp"
+#include "utils/utils.hpp"
 
 LayoutPainter::LayoutPainter(LayoutBox* l, Dimensions viewport) {
   layout = l;
@@ -39,21 +40,17 @@ void LayoutPainter::setColor(Color* c) {
 
 void splitIntoLines(std::string text, int fontsize, Dimensions container, std::vector<std::string>* lines) {
   int currentWidth = 0;
-  std::vector<std::string> wordSplits;
-  std::vector<std::string> res;
 
   std::vector<std::string> out;
   size_t pos = 0;
-  std::string token;
   
   FontManager* fm = FontManager::getInstance();
   std::string currentLine = "";
   bool endofline = false;
-  while ((pos = text.find(' ')) != std::string::npos) {
-    token = text.substr(0, pos + 1);
-    out.push_back(token);
-    text.erase(0, pos + 1);
-  
+  utils::splitString(text, &out);
+  std::string token;
+  for (std::vector<std::string>::iterator it = out.begin(); it != out.end(); ++it) {
+    token = (*it);
     int wordWidth = fm->getWidthOfText("arial", fontsize, token);
     if (currentWidth + wordWidth > container.content.width) {
       lines->push_back(currentLine);
@@ -62,19 +59,9 @@ void splitIntoLines(std::string text, int fontsize, Dimensions container, std::v
     } else {
       currentLine += token;
       currentWidth += wordWidth;
-    }
+    } 
   }
-  token = text;
-  out.push_back(token);
-  text.erase(0, pos + 1);
-
-  int wordWidth = fm->getWidthOfText("arial", fontsize, token);
-  if (currentWidth + wordWidth > container.content.width) {
-    lines->push_back(currentLine);
-  } else {
-    currentLine += token;
-    lines->push_back(currentLine);
-  }
+  lines->push_back(currentLine);
 }
 
 

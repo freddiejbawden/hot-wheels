@@ -26,7 +26,5 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR} ${SDL2TTF_INCLUDE_DIR})
 
-
-
 add_subdirectory(src)
 add_subdirectory(app)

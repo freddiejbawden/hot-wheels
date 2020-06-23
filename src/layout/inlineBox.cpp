@@ -3,7 +3,7 @@
 #include "domnodes/element.hpp"
 #include "cssnodes/values/keyword.hpp"
 #include "fontmanager/fontmanager.hpp"
-
+#include "utils/utils.hpp"
 
 InlineBox::InlineBox(StyledNode* node) : LayoutBox(node) {};
 
@@ -71,16 +71,13 @@ void InlineBox::calculateHeight() {
       
       std::vector<std::string> out;
       size_t pos = 0;
+      // make this a util function
       std::string token;
       std::string text = t->text;
-      while ((pos = text.find(' ')) != std::string::npos) {
-        token = text.substr(0, pos + 1);
-        out.push_back(token);
-        text.erase(0, pos + 1);
-      }
-      
+      utils::splitString(text, &out);    
       int currentWidth = 0;
-       int h = 0;
+      
+      int h = 0;
       for (std::vector<std::string>::iterator it = out.begin(); it != out.end(); ++it) {
         std::string s = *it;
         int wordWidth = fm->getWidthOfText("arial", fontsize, s);

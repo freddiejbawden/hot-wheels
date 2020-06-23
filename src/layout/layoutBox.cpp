@@ -24,7 +24,11 @@ void LayoutBox::display(int level) {
       std::cout << e->tag_name << " [";   
     } else if (typeid(*domNode) == typeid(Text)) {
       Text *t = (Text*) domNode;
-      std::cout << '"' << t->text << "\" [";
+      if (t->text.length() > 40) {
+        std::cout << '"' << t->text.substr(0,40) << "...\"";
+      } else {
+        std::cout << '"' << t->text << '"';
+      }
     } else {
       std::cout << "dom node not recognised!";
       exit(1); 

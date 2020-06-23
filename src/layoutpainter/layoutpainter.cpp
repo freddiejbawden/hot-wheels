@@ -103,7 +103,6 @@ void LayoutPainter::drawLayoutBox(LayoutBox* layout){
       splitIntoLines(t->text, fontsize, layout->dimensions, &lines);
       int y = layout->dimensions.content.y;
       for (std::vector<std::string>::iterator it = lines.begin(); it != lines.end(); ++it) {
-        std::cout << (*it) << '\n';
         const char* content = (*it).c_str();
         SDL_Surface* textSurface = TTF_RenderText_Solid(fm->getFont("arial", fontsize), content, black);
         SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface); 

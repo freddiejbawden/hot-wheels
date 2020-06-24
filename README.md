@@ -30,7 +30,7 @@ From project root, run
 
 **Milestone 2**
 - [x] Draw Inline Boxes
-- [ ] Render text in boxes
+- [x] Render text in boxes
 - [x] Text Sizing
 - [ ] Link tags
 - [ ] Style tags

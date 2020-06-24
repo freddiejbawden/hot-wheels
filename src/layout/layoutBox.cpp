@@ -1,7 +1,6 @@
 #include <algorithm>
 
 #include "layout/layoutBox.hpp"
-#include "layout/boxType.hpp"
 #include "domnodes/element.hpp"
 #include "domnodes/text.hpp"
 #include "cssnodes/values/length.hpp"
@@ -82,13 +81,6 @@ LayoutBox* LayoutBox::createAnonymousInlineBox() {
     return this;
   }
 }
-
-LayoutBox::LayoutBox() {
-  node = NULL;
-}
-
-
-
 void LayoutBox::calculateWidth(Dimensions d) {
   return;
 } 
@@ -120,6 +112,7 @@ void LayoutBox::createLayout(Dimensions d) {
 LayoutBox::LayoutBox(StyledNode* root)
 {
   node = root; 
+  dimensions = Dimensions();
 
   for (std::vector<StyledNode*>::iterator it = node->children.begin(); it != node->children.end(); ++it) {
     StyledNode* child = (*it);

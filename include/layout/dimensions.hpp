@@ -8,6 +8,7 @@ class Dimensions {
   public:
     Dimensions() = default;
     Rect content;
+    
     // Surrounding edges:
     EdgeSizes padding;
     EdgeSizes border;

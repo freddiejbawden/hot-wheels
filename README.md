@@ -32,7 +32,13 @@ From project root, run
 - [x] Draw Inline Boxes
 - [x] Render text in boxes
 - [x] Text Sizing
-- [ ] Style tags
+- [x] Style tags
+
+**Project Wrap Up**
+- [ ] Take files in from command line
+- [ ] Create sample to demonstrate what the engine can do
+- [ ] Reduce pixelation of text
+
 
 ## HTML Subset
 

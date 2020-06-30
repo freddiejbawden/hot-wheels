@@ -31,6 +31,14 @@ void BlockBox::calculateWidth(Dimensions parent) {
   std::vector<Value*> widths = std::vector<Value*>{width, margin_left, margin_right, border_left, border_right, padding_left, padding_right};
   // the total must be equal to the width of the containing block
   int total = 0;
+  if (width != autoWidth){
+    Length* w = (Length*) width;
+    if (w->unit == Unit::percent) {
+      float percentage = ((float) w->value) / 100;
+      width = new Length(parent.content.width * percentage);
+    }
+  }
+
   for (std::vector<Value*>::iterator it = widths.begin(); it != widths.end(); ++it) {
     Value* v = *it;
     total += v->toPX();
@@ -42,6 +50,7 @@ void BlockBox::calculateWidth(Dimensions parent) {
   'auto') is larger than the width of the containing block, then any 'auto' values for 'margin-left' 
   or 'margin-right' are, for the following rules, treated as zero. */
   if (width != autoWidth) {
+   
     int cond1Sum =  border_left->toPX() + padding_left->toPX() + width->toPX() 
                       + padding_right->toPX() + border_right->toPX();
 

@@ -10,6 +10,11 @@ void Length::display() {
     unitSymbol = "px";
   }
   break;
+  case percent:
+  {
+    unitSymbol = "%";
+  }
+  break;
   default:
     break;
   }
@@ -28,6 +33,9 @@ Length::Length(int v) {
 int Length::toPX() {
   if (unit == Unit::px) {
     return value;
+  }  else if (unit == Unit::percent) {
+    std::cout << "Trying to access PX value of percentage!\n";
+    return 0;
   } else {
     return 0;
   }

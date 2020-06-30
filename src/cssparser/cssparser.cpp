@@ -79,6 +79,8 @@ Unit CSSParser::getUnit() {
   }
   if (unittext == "px") {
     return px;
+  } else if (unittext == "%") {
+    return percent;
   } else {
     return invalid;
   }

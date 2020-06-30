@@ -3,6 +3,7 @@
 #define CSS_UNIT
 enum Unit {
   px,
+  percent,
   invalid
 };
 #endif

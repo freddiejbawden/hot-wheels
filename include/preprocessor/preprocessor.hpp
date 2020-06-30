@@ -5,7 +5,8 @@
 
 class Preprocessor {
   public:
-    static std::string loadFile(std::string filename);    
+    static std::string loadAndCleanFile(std::string filename);    
+    static std::string cleanFile(std::string content);
 };
 
 #endif

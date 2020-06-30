@@ -10,17 +10,22 @@
 
 int main() {
   std::cout << "Hot wheels\n";
-  std::string htmldata = Preprocessor::loadFile("test.html");
+  std::string htmldata = Preprocessor::loadAndCleanFile("test.html");
   HTMLParser htmlParser = HTMLParser();
-  Node* root = htmlParser.parse(htmldata);
+  std::string cssStrings = "";
+  Node* root = htmlParser.parse(htmldata, &cssStrings);
+  cssStrings = Preprocessor::cleanFile(cssStrings);
+  std::cout << cssStrings << '\n';
   std::cout << "test.html parsed\n";
   
-  std::string css_data = Preprocessor::loadFile("test.css");
+  std::string css_data = Preprocessor::loadAndCleanFile("test.css");
   CSSParser cssParser = CSSParser();
   std::vector<Rule*> rules = cssParser.parse(css_data);
+  std::vector<Rule*> elementRules = cssParser.parse(cssStrings);
   std::cout << "test.css parsed\n";
+  rules.insert(rules.end(), elementRules.begin(), elementRules.end());
   
-
+  
   StyledNode* rootStyledNode = new StyledNode(root, rules);
   std::cout << "style tree compiled\n";
   rootStyledNode->display(0);

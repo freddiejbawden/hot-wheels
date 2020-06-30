@@ -13,7 +13,7 @@ T remove_if(T beg, T end, P pred)
     return dest;
 }
 
-std::string Preprocessor::loadFile(std::string filename) {
+std::string Preprocessor::loadAndCleanFile(std::string filename) {
   std::string line;
   std::string out;
   std::ifstream myfile (filename);
@@ -21,12 +21,16 @@ std::string Preprocessor::loadFile(std::string filename) {
   {
     while ( getline (myfile,line) )
     {
-      std::string::iterator end_pos = std::remove(line.begin(), line.end(), '\n');
-      line.erase(end_pos, line.end());
-      out.append(line);
+      out.append(cleanFile(line));
     }
     myfile.close();
   }
   else std::cout << "Unable to open file"; 
   return out;
 }
+std::string Preprocessor::cleanFile(std::string content) {
+  std::string::iterator end_pos = std::remove(content.begin(), content.end(), '\n');
+  content.erase(end_pos, content.end());
+  return content;
+  
+} 

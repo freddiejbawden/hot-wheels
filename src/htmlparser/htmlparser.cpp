@@ -118,17 +118,22 @@ std::string HTMLParser::parseTagName() {
      inputPos++;
      c = getCurrentChar();
    }
+   isStyle = (tag == "style");  
    // roll back
    return tag;
 }
 
 Node* HTMLParser::parseText() {
+  
   std::string t;
   char current = getCurrentChar();
   while (current != '<') {
     t.push_back(current);
     inputPos++;
     current = getCurrentChar();
+  }
+  if (isStyle) {
+    cssRules->append(t);
   }
   Text* textNode = new Text(t);
   return textNode;
@@ -155,10 +160,11 @@ void HTMLParser::checkForDoctype() {
   }
 }
 
-Node* HTMLParser::parse(std::string inp) {
+Node* HTMLParser::parse(std::string inp, std::string* out) {
   Node root = Node();
   inputPos = 0;
   input = inp;
+  cssRules = out;
   checkForDoctype();
   std::vector<Node*> n = parseNodes();
   return n[0];

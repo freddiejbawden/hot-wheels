@@ -20,11 +20,11 @@ int main() {
   
   std::string css_data = Preprocessor::loadAndCleanFile("test.css");
   CSSParser cssParser = CSSParser();
+  css_data = css_data + cssStrings;
+  std::cout << css_data << '\n';
   std::vector<Rule*> rules = cssParser.parse(css_data);
-  std::vector<Rule*> elementRules = cssParser.parse(cssStrings);
-  std::cout << "test.css parsed\n";
-  rules.insert(rules.end(), elementRules.begin(), elementRules.end());
-  
+  std::cout << "CSS parsed\n";
+  // Properly merge rules  
   
   StyledNode* rootStyledNode = new StyledNode(root, rules);
   std::cout << "style tree compiled\n";

@@ -32,7 +32,6 @@ From project root, run
 - [x] Draw Inline Boxes
 - [x] Render text in boxes
 - [x] Text Sizing
-- [ ] Link tags
 - [ ] Style tags
 
 ## HTML Subset

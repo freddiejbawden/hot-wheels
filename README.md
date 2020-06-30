@@ -35,9 +35,9 @@ From project root, run
 - [x] Style tags
 
 **Project Wrap Up**
-- [ ] Take files in from command line
+- [x] Take files in from command line
 - [ ] Create sample to demonstrate what the engine can do
-- [ ] Reduce pixelation of text
+
 
 
 ## HTML Subset

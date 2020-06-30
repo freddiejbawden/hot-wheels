@@ -1,6 +1,9 @@
-div {
-  background-color: #0000ff;
+header {
+  width: 500px;
+  background-color: #999999;
+  padding: 10px;
 }
+
 .column {
-  width: 50%;
+  margin: 10px;
 }

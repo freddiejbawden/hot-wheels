@@ -18,5 +18,6 @@ target_link_libraries(hotwheels
   layout_lib
   layoutpainter_lib
   utils_lib
+  engine_lib
   )
   

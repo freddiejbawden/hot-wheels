@@ -156,6 +156,10 @@ void BlockBox::calculateHeight() {
       Element* e = (Element*) node->node;
       if (e->tag_name == "p") {
         dimensions.padding.bottom +=  FontManager::DEFAULT_TEXTSIZE;
+      } else {
+        if (e->tag_name == "head") {
+          dimensions.content.height = 0;
+        }
       }
   }
 }

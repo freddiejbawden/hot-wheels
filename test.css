@@ -1,3 +1,6 @@
 div {
   background-color: #0000ff;
 }
+.column {
+  width: 50%;
+}

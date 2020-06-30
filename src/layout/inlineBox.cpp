@@ -78,17 +78,19 @@ void InlineBox::calculateHeight() {
       int currentWidth = 0;
       
       int h = 0;
+      int textsize = fm->getHeightOfText("arial", fontsize, t->text);
+      std::cout << textsize << " " << t->text << '\n';
       for (std::vector<std::string>::iterator it = out.begin(); it != out.end(); ++it) {
         std::string s = *it;
         int wordWidth = fm->getWidthOfText("arial", fontsize, s);
         if (currentWidth + wordWidth > dimensions.content.width) {
-          h += fm->getHeightOfText("arial", fontsize, t->text);
+          h += textsize;
           currentWidth = wordWidth;
         } else {
           currentWidth += wordWidth;
         }
       };
-      h += fm->getHeightOfText("arial", fontsize, t->text);
+      h += textsize;
       dimensions.content.height = h;
     } else {
       int maxHeight = 0;

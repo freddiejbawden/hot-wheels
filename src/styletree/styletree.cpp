@@ -174,7 +174,9 @@ StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules, StyledN
  
   // recurse to children
   for (std::vector<Node*>::iterator it = domNodeRoot->children.begin(); it != domNodeRoot->children.end(); ++it) {
-    children.push_back(new StyledNode(*it, styleRules, this));
+    if (elm->tag_name != "head") {
+      children.push_back(new StyledNode(*it, styleRules, this));
+    }
   }
 }    
 StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules) : StyledNode(domNodeRoot, styleRules, nullptr) {};

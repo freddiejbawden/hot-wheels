@@ -2,8 +2,7 @@
 #include "parser/parser.hpp"
 
 char Parser::getCurrentChar() {
-  std::cout << inputPos << ": " <<  input.length() << '\n';
-  if (inputPos > input.size()) {
+  if (inputPos >= input.length()) {
     return ' ';
   }
   return input.at(inputPos);

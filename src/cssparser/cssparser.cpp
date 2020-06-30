@@ -175,13 +175,10 @@ std::vector<Rule*> CSSParser::parse(std::string data)
   inputPos = 0;
   input = data;
   std::vector<Rule*> rules;
-  std::cout << input << ": " << input.length() << '\n';
   while (inputPos < input.length()) {
-    std::cout << "new rule\n";
     Rule* r = new Rule();
     r->selectors = parseSelectors(); 
     r->declarations = parseDeclarations();
-    r->display();
     rules.push_back(r);
     skipWhitespace();
   }

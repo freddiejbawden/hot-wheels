@@ -80,10 +80,10 @@ void LayoutPainter::drawLayoutBox(LayoutBox* layout){
       if (elm->tag_name == "head" || elm->tag_name == "style") {
         return;
       }
-      r.x = layout->dimensions.content.x;
-      r.y = layout->dimensions.content.y;
-      r.w = layout->dimensions.content.width;
-      r.h = layout->dimensions.content.height;
+      r.x = layout->dimensions.marginBox()->x;
+      r.y = layout->dimensions.marginBox()->y;
+      r.w = layout->dimensions.borderBox()->width;
+      r.h = layout->dimensions.borderBox()->height;
       if (background) SDL_RenderFillRect(renderer, &r);
     } else if (typeid(*(layout->node->node)) == typeid(Text)) {
       Text* t = (Text*) layout->node->node;

@@ -90,12 +90,14 @@ void LayoutPainter::drawLayoutBox(LayoutBox* layout){
       SDL_Color black = {0, 0, 0}; 
       FontManager* fm = FontManager::getInstance();
       int fontsize = layout->node->parent->getPropertyValue("font-size")->toPX();
+      Color* fontColor = (Color*) layout->node->parent->getPropertyValue("color");
+      SDL_Color sdl_color = {fontColor->r, fontColor->g, fontColor->b};
       std::vector<std::string> lines;
       splitIntoLines(t->text, fontsize, layout->dimensions, &lines);
       int y = layout->dimensions.content.y;
       for (std::vector<std::string>::iterator it = lines.begin(); it != lines.end(); ++it) {
         const char* content = (*it).c_str();
-        SDL_Surface* textSurface = TTF_RenderText_Solid(fm->getFont("arial", fontsize), content, black);
+        SDL_Surface* textSurface = TTF_RenderText_Solid(fm->getFont("arial", fontsize), content, sdl_color);
         SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface); 
         r.x = layout->dimensions.content.x;
         r.y = y;

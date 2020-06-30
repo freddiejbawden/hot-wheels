@@ -4,6 +4,7 @@
 #include "domnodes/element.hpp"
 #include "cssnodes/values/keyword.hpp"
 #include "cssnodes/values/length.hpp"
+#include "cssnodes/values/color.hpp"
 #include "fontmanager/fontmanager.hpp"
 
 void StyledNode::display(int level) {
@@ -156,6 +157,8 @@ StyledNode::StyledNode(Node* domNodeRoot, std::vector<Rule*> styleRules, StyledN
     // some properties are inherited, like font-size - we should make a const with all of them and 
     // loop through? 
     properties["font-size"] = parent->getPropertyValueOrDefault("font-size", new Length(16));
+    properties["color"] = parent->getPropertyValueOrDefault("color", new Color());
+
   }
   setDefaults();
   Element*  elm = (Element*) node;

@@ -17,7 +17,7 @@ LayoutPainter::LayoutPainter(LayoutBox* l, Dimensions viewport) {
   printf("Init Successful!\n");
 
 
-  SDL_Window* win = SDL_CreateWindow("Intel8080",
+  SDL_Window* win = SDL_CreateWindow("HotWheels",
                                       SDL_WINDOWPOS_UNDEFINED, 
                                       SDL_WINDOWPOS_UNDEFINED, 
                                       500,

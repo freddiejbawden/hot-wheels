@@ -36,9 +36,10 @@ void Engine::render(std::string htmlFile, std::string cssFile) {
   LayoutBox* layoutBox = new BlockBox(rootStyledNode);
   Dimensions viewport = Dimensions();
   viewport.content = Rect();
-  viewport.content.width = 500;
+  viewport.content.width = 600;
   viewport.content.height = 0;
   layoutBox->createLayout(viewport);
+  layoutBox->display(0);
   std::cout << "Layout boxes computed\n";
   
 

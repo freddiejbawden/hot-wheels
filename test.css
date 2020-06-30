@@ -4,7 +4,10 @@ header {
   padding: 10px;
   margin-bottom: 10px;
 }
-
+.container {
+  display: block;
+}
 .column {
   width: 50%;
+  margin: 10px;
 }

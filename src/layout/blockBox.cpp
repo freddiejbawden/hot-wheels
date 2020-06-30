@@ -4,7 +4,8 @@
 #include "layout/blockBox.hpp"
 #include "cssnodes/values/length.hpp"
 #include "cssnodes/values/keyword.hpp"
-
+#include "domnodes/element.hpp"
+#include "fontmanager/fontmanager.hpp"
 
 BlockBox::BlockBox(StyledNode* node) : LayoutBox(node) {};
 
@@ -144,8 +145,17 @@ void BlockBox::calculateChildren() {
   }
 }
 void BlockBox::calculateHeight() {
+  // check if there is a css property that mandates height, if so override the height
+  // calculated in BlockBox::calculateChildren
   Value* height = node->getPropertyValue("height");
   if (height != NULL) {
     dimensions.content.height = height->toPX();
+  }
+  // Add a new line each 
+  if (typeid(*(node->node)) == typeid(Element)) {
+      Element* e = (Element*) node->node;
+      if (e->tag_name == "p") {
+        dimensions.padding.bottom +=  FontManager::DEFAULT_TEXTSIZE;
+      }
   }
 }

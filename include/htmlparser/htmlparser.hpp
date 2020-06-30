@@ -9,7 +9,9 @@
 class HTMLParser : public Parser {
  public:
     Node *root;
-    Node* parse(std::string inp);
+    std::string* cssRules;
+    bool isStyle = false;
+    Node* parse(std::string inp, std::string* cssRules);
     Node* parseNode();
     std::vector<Node*> parseNodes();
     Node* parseElement();

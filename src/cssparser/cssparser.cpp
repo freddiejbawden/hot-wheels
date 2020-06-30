@@ -161,8 +161,10 @@ Declaration CSSParser::parseDeclaration() {
 
 std::vector<Declaration> CSSParser::parseDeclarations() {
   std::vector<Declaration> declarations;
+  skipWhitespace();
   while (getCurrentChar() != '}') {
     declarations.push_back(parseDeclaration());
+    skipWhitespace();
   }
   inputPos++;
   return declarations;
@@ -173,12 +175,14 @@ std::vector<Rule*> CSSParser::parse(std::string data)
   inputPos = 0;
   input = data;
   std::vector<Rule*> rules;
-  while (inputPos < input.size()) {
-   Rule* r = new Rule();
-   r->selectors = parseSelectors(); 
-   r->declarations = parseDeclarations();
-   rules.push_back(r);
+  while (inputPos < input.length()) {
+    Rule* r = new Rule();
+    r->selectors = parseSelectors(); 
+    r->declarations = parseDeclarations();
+    rules.push_back(r);
+    skipWhitespace();
   }
+  std::cout << "done\n";
   return rules;
 }
 CSSParser::CSSParser() {

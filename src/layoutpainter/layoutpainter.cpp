@@ -76,6 +76,10 @@ void LayoutPainter::drawLayoutBox(LayoutBox* layout){
     }
     if (typeid(*(layout->node->node)) == typeid(Element)) {
       Element* elm = (Element*) layout->node->node;
+      // style tags can be in the body and will have been handled further up so ignore when painting
+      if (elm->tag_name == "head" || elm->tag_name == "style") {
+        return;
+      }
       r.x = layout->dimensions.content.x;
       r.y = layout->dimensions.content.y;
       r.w = layout->dimensions.content.width;
@@ -105,7 +109,7 @@ void LayoutPainter::drawLayoutBox(LayoutBox* layout){
     }
   
   } 
-  
+  // render children
   for (std::vector<LayoutBox*>::iterator it = layout->children.begin(); it != layout->children.end(); ++it) {
     drawLayoutBox(*it);
   }
